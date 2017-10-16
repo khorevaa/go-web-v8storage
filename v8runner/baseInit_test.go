@@ -19,7 +19,7 @@ type MySuite struct{
 	ПутьКШаблону string
 }
 
-func (s *MySuite) SetUpTest() {
+func (s *MySuite) SetupSuite() {
 
 	s.conf = Конфигуратор{
 		НовыйКонтекст(),
@@ -38,15 +38,16 @@ func (s *MySuite) SetUpTest() {
 
 func (s *MySuite) TestКонфигуратор_СоздатьФайловуюБазуПоШаблону() {
 
-	s.Assert().NotEmpty(ПолучитьВерсиюПоУмолчанию(), "Версия не определилась")
+	s.Assert().NotEmpty(s.conf.ВерсияПлатформы, "Версия не определилась")
 
 
-	//err := s.conf.СоздатьФайловуюБазуПоШаблону(s.КаталогБазы, s.ПутьКШаблону)
+	err := s.conf.СоздатьФайловуюБазуПоШаблону(s.КаталогБазы, s.ПутьКШаблону)
 
 	//s.T().Errorf(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону")
-	//s.NoErrorf(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
+	s.NoErrorf(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
 	//s.Zero(1, "Нули")
-}
+	s.Assert().NotEmptyf(s.conf.выводКоманды, "Вывод команды %s", s.conf.выводКоманды)
+	}
 
 
 // In order for 'go test' to run this suite, we need to create
