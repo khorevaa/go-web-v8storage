@@ -10,6 +10,12 @@ const (
 	prefix = "v8runner"
 )
 
+var (
+	tempFiles []string
+	tempDir string = ИницализороватьВременныйКаталог()
+	workDir string = ВременныйКаталог()
+)
+
 func ФайлИнформации(файлИнформации string) func(*Конфигуратор) {
 	return func(s *Конфигуратор) {
 		s.ФайлИнформации = файлИнформации
