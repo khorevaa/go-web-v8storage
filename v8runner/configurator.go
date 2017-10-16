@@ -6,6 +6,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"syscall"
 	"github.com/pkg/errors"
+	//"github.com/cweill/gotests/testdata"
+	//"github.com/stretchr/testify/assert"
 )
 
 type Конфигуратор struct {
@@ -14,7 +16,7 @@ type Конфигуратор struct {
 	ОчищатьФайлИнформации bool
 	ЭтоWindows            bool
 	ВерсияПлатформы       *ВерсияПлатформы
-	выводКоманды 		  string
+	выводКоманды          string
 
 }
 
@@ -82,7 +84,7 @@ func (conf *Конфигуратор) ИнициализироватьВреме
 	conf.Контекст.КлючСоединенияСБазой = TempDB.КлючСоединенияСБазой
 }
 
-func (conf *Конфигуратор) СтандартныеПараметрыЗапускаКонфигуратора() (p []string ){
+func (conf *Конфигуратор) СтандартныеПараметрыЗапускаКонфигуратора() (p []string) {
 
 	//var p []string
 	var мОчищатьФайлИнформации bool
@@ -116,10 +118,15 @@ const defaultFailedCode = 1
 
 func (conf *Конфигуратор) выполнить(args []string) (e error) {
 
+	if ok, err := conf.ПроверитьВозможностьВыполнения(); !ok {
+		e = err
+		return
+	}
+
 	var exitCode int
 
-	procName :=  conf.ВерсияПлатформы.V8
-	cmd := exec.Command(procName, args...)// strings.Join(args, " "))
+	procName := conf.ВерсияПлатформы.V8
+	cmd := exec.Command(procName, args...) // strings.Join(args, " "))
 
 	log.Debugf("Строка запуска: %s", cmd.Args)
 
@@ -156,18 +163,28 @@ func (conf *Конфигуратор) выполнить(args []string) (e error
 
 }
 
-func (c *Конфигуратор) установитьВыводКоманды(s string){
+func (c *Конфигуратор) ПроверитьВозможностьВыполнения() (ok bool, err error) {
+
+	if c.ВерсияПлатформы == nil {
+		err = errors.New("Не найдена доступная версия платформы")
+	}
+
+	return
+
+}
+
+func (c *Конфигуратор) установитьВыводКоманды(s string) {
 	c.выводКоманды = s
 	log.Debugf("Установлен вывод команды 1С: %s", s)
 }
 
-func (c *Конфигуратор) прочитатьФайлИнформации() (str string){
+func (c *Конфигуратор) прочитатьФайлИнформации() (str string) {
 
 	log.Debugf("Читаю файла информации 1С: %s", c.ФайлИнформации)
 
 	b, err := ReadFileUTF16(c.ФайлИнформации) // just pass the file name
 	if err != nil {
-		log.Debugf("Обшибка чтения файла информации 1С %s: %v",c.ФайлИнформации, err)
+		log.Debugf("Обшибка чтения файла информации 1С %s: %v", c.ФайлИнформации, err)
 		//fmt.Print(err)
 	}
 

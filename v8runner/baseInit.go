@@ -3,7 +3,6 @@ package v8runner
 import (
 	"fmt"
 	"github.com/pkg/errors"
-
 )
 
 func (conf *Конфигуратор) СоздатьФайловуюБазуПоУмолчанию(КаталогБазы string) error {
@@ -12,8 +11,9 @@ func (conf *Конфигуратор) СоздатьФайловуюБазуПо
 
 func (conf *Конфигуратор) СоздатьФайловуюБазуПоШаблону(КаталогБазы string, ПутьКШаблону string) (e error) {
 
-	if ok, err := Exists(ПутьКШаблону); ok{
-		e = errors.WithMessage(err,"Не правильно задан параметр ПутьКШаблону: ")
+	if ok, err := IsNoExist(ПутьКШаблону); ok {
+
+		e = errors.WithMessage(err, "Не правильно задан параметр ПутьКШаблону: ")
 		return
 	}
 
@@ -35,13 +35,13 @@ func (conf *Конфигуратор) СоздатьФайловуюБазу(К�
 }
 
 //
-func (conf *Конфигуратор) createFileBase(dir string, pTemplate string, lName string) error {
+func (conf *Конфигуратор) createFileBase(dir string, pTemplate string, lName string) (e error) {
 
 	var p []string
 	p = append(p, "CREATEINFOBASE")
 	p = append(p, fmt.Sprintf("File=%s", dir))
 
-	if ЗначениеЗаполнено(pTemplate) {
+	if ok, _ := Exists(pTemplate); ok {
 		p = append(p, fmt.Sprintf("/UseTemplate %s", pTemplate))
 	}
 
@@ -51,5 +51,7 @@ func (conf *Конфигуратор) createFileBase(dir string, pTemplate strin
 
 	p = append(p, "/Out", conf.ФайлИнформации)
 
-	return conf.выполнить(p)
+	e = conf.выполнить(p)
+
+	return
 }

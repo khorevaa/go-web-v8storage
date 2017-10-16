@@ -59,8 +59,13 @@ func Exists(name string) (bool, error) {
 	}
 	return true, nil
 }
+func IsNoExist(name string) (bool, error) {
 
-func ОчиститьВременныйКаталог () {
+	ok, err := Exists(name)
+	return !ok, err
+}
+
+func ОчиститьВременныйКаталог() {
 
 	os.RemoveAll(tempDir)
 
@@ -88,7 +93,6 @@ func ReadFileUTF16(filename string) ([]byte, error) {
 	// decode and print:
 	decoded, err := ioutil.ReadAll(unicodeReader)
 	return decoded, err
-
 
 }
 

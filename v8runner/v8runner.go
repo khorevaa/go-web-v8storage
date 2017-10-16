@@ -12,8 +12,8 @@ const (
 
 var (
 	tempFiles []string
-	tempDir string = ИницализороватьВременныйКаталог()
-	workDir string = ВременныйКаталог()
+	tempDir   string = ИницализороватьВременныйКаталог()
+	workDir   string = ВременныйКаталог()
 )
 
 func ФайлИнформации(файлИнформации string) func(*Конфигуратор) {

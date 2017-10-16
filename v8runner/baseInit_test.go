@@ -7,19 +7,20 @@ import (
 	"path"
 
 	//"github.com/stretchr/testify/assert"
+	//"fmt"
 )
+
 var pwd, _ = os.Getwd()
 
-
-
-type MySuite struct{
+type ТестыНаСозданиеБазыДанных struct {
 	suite.Suite
-	conf Конфигуратор
-	КаталогБазы string
-	ПутьКШаблону string
+	conf           Конфигуратор
+	КаталогБазы    string
+	ПутьКШаблону   string
+	ИмяБазыВСписке string
 }
 
-func (s *MySuite) SetupSuite() {
+func (s *ТестыНаСозданиеБазыДанных) SetupTest() {
 
 	s.conf = Конфигуратор{
 		НовыйКонтекст(),
@@ -30,30 +31,58 @@ func (s *MySuite) SetupSuite() {
 		"",
 	}
 	s.КаталогБазы = ВременныйКаталог()
-	s.ПутьКШаблону = path.Join( pwd,"fixtures/ТестовыйФайлКонфигурации.cf")
+	s.ПутьКШаблону = path.Join(pwd, "fixtures/ТестовыйФайлКонфигурации.cf")
+	s.ИмяБазыВСписке = "Тестовое имя"
 
-
-// Use s.dir to prepare some data.
+}
+func (s *ТестыНаСозданиеБазыДанных) TearDownSuite() {
+	ОчиститьВременныйКаталог()
 }
 
-func (s *MySuite) TestКонфигуратор_СоздатьФайловуюБазуПоШаблону() {
+func (s *ТестыНаСозданиеБазыДанных) TestКонфигуратор_СоздатьФайловуюБазуПоШаблону() {
 
 	s.Assert().NotEmpty(s.conf.ВерсияПлатформы, "Версия не определилась")
 
-
 	err := s.conf.СоздатьФайловуюБазуПоШаблону(s.КаталогБазы, s.ПутьКШаблону)
 
-	//s.T().Errorf(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону")
-	s.NoErrorf(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
-	//s.Zero(1, "Нули")
-	s.Assert().NotEmptyf(s.conf.выводКоманды, "Вывод команды %s", s.conf.выводКоманды)
-	}
+	s.NoError(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
 
+}
+
+func (s *ТестыНаСозданиеБазыДанных) TestКонфигуратор_СоздатьФайловуюБазуПоУмолчанию() {
+
+	s.Assert().NotEmpty(s.conf.ВерсияПлатформы, "Версия не определилась")
+
+	err := s.conf.СоздатьФайловуюБазуПоУмолчанию(s.КаталогБазы)
+
+	s.NoError(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
+
+}
+
+func (s *ТестыНаСозданиеБазыДанных) TestКонфигуратор_СоздатьИменнуюФайловуюБазу() {
+
+	s.Assert().NotEmpty(s.conf.ВерсияПлатформы, "Версия не определилась")
+
+	err := s.conf.СоздатьИменнуюФайловуюБазу(s.КаталогБазы, s.ИмяБазыВСписке)
+
+	s.NoError(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
+
+}
+func (s *ТестыНаСозданиеБазыДанных) TestКонфигуратор_СоздатьИменнуюФайловуюБазуПоШаблону() {
+
+	s.Assert().NotEmpty(s.conf.ВерсияПлатформы, "Версия не определилась")
+
+	err := s.conf.СоздатьИменнуюФайловуюБазуПоШаблону(s.КаталогБазы, s.ПутьКШаблону, s.ИмяБазыВСписке)
+
+	s.NoError(err, "TestКонфигуратор_СоздатьФайловуюБазуПоШаблону: %v", err)
+
+}
 
 // In order for 'go test' to run this suite, we need to create
 // a normal test function and pass our suite to suite.Run
-func TestМойБлокТестов(t *testing.T) {
-	suiteTester := new(MySuite)
+func Test_ТестыНаСозданиеБазыДанных(t *testing.T) {
+
+	suiteTester := new(ТестыНаСозданиеБазыДанных)
 	suite.Run(t, suiteTester)
 
 }
