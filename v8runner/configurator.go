@@ -2,22 +2,20 @@ package v8runner
 
 import (
 	"fmt"
-	//"os"
-	//"io/ioutil"
-	//"github.com/mash/go-tempfile-suffix"
 	"os/exec"
-	"strings"
 	log "github.com/sirupsen/logrus"
-	//"github.com/constabulary/gb/testdata/src/f"
+	"syscall"
+	"github.com/pkg/errors"
 )
 
 type Конфигуратор struct {
 	Контекст              *Контекст
 	ФайлИнформации        string
 	ОчищатьФайлИнформации bool
-	путьКПлатформе1С      string
 	ЭтоWindows            bool
-	версияПлатформы       string
+	ВерсияПлатформы       *ВерсияПлатформы
+	выводКоманды 		  string
+
 }
 
 // new func
@@ -28,6 +26,8 @@ func НовыйКонфигуратор() (*Конфигуратор, error) {
 
 	conf := &Конфигуратор{}
 	conf.Контекст = &ctx
+	conf.ФайлИнформации = НовыйФайлИнформации()
+	conf.ВерсияПлатформы = ПолучитьВерсиюПоУмолчанию()
 
 	var err error
 
@@ -82,9 +82,9 @@ func (conf *Конфигуратор) ИнициализироватьВреме
 	conf.Контекст.КлючСоединенияСБазой = TempDB.КлючСоединенияСБазой
 }
 
-func (conf *Конфигуратор) СтандартныеПараметрыЗапускаКонфигуратора() []string {
+func (conf *Конфигуратор) СтандартныеПараметрыЗапускаКонфигуратора() (p []string ){
 
-	var p []string
+	//var p []string
 	var мОчищатьФайлИнформации bool
 	var ctx *Контекст = conf.Контекст
 
@@ -93,7 +93,7 @@ func (conf *Конфигуратор) СтандартныеПараметрыЗ
 	p = append(p, "DESIGNER")
 	p = append(p, "КлючСоединенияСБазой()")
 
-	p = append(p, "/Out", НовыйФайлИнформации())
+	p = append(p, "/Out", conf.ФайлИнформации)
 
 	if мОчищатьФайлИнформации {
 		p = append(p, " -NoTruncate")
@@ -108,26 +108,70 @@ func (conf *Конфигуратор) СтандартныеПараметрыЗ
 	p = append(p, "/DisableStartupMessages")
 	p = append(p, "/DisableStartupDialogs")
 
-	return p
+	return
 }
 
 // private run func
+const defaultFailedCode = 1
 
-func (conf *Конфигуратор) выполнить(args []string) error {
+func (conf *Конфигуратор) выполнить(args []string) (e error) {
 
-	binary, lookErr := exec.LookPath("echo")
-	if lookErr != nil {
-		panic(lookErr)
+	var exitCode int
+
+	procName :=  conf.ВерсияПлатформы.V8
+	cmd := exec.Command(procName, args...)// strings.Join(args, " "))
+
+	log.Debugf("Строка запуска: %s", cmd.Args)
+
+	out, e := cmd.Output()
+
+	if e != nil {
+		// try to get the exit code
+		if exitError, ok := e.(*exec.ExitError); ok {
+			ws := exitError.Sys().(syscall.WaitStatus)
+			exitCode = ws.ExitStatus()
+		} else {
+			// This will happen (in OSX) if `name` is not available in $PATH,
+			// in this situation, exit code could not be get, and stderr will be
+			// empty string very likely, so we use the default fail code, and format err
+			// to string and set to stderr
+			log.Debugf("Could not get exit code for failed program: %v, %v", procName, args)
+			exitCode = defaultFailedCode
+		}
+	} else {
+		// success, exitCode should be 0 if go is ok
+		ws := cmd.ProcessState.Sys().(syscall.WaitStatus)
+		exitCode = ws.ExitStatus()
 	}
-	fmt.Errorf(binary)
-	//env := os.Environ()
-	//fmt.Errorf()
-	//strings.Fields(args)
-	out, execErr := exec.Command(binary, strings.Join(args, " ")).Output()
-	if execErr != nil {
-		panic(execErr)
-	}
-	log.Debugf("%s", out)
-	return execErr
 
+	conf.установитьВыводКоманды(conf.прочитатьФайлИнформации())
+
+	if exitCode == 1 {
+		e = errors.New(conf.выводКоманды);
+	}
+
+	log.Debugf("КодЗавершения команды: %v", exitCode)
+	log.Debugf("Результат выполнения команды: %s, out: %s", conf.выводКоманды, out)
+	return e
+
+}
+
+func (c *Конфигуратор) установитьВыводКоманды(s string){
+	c.выводКоманды = s
+	log.Debugf("Установлен вывод команды 1С: %s", s)
+}
+
+func (c *Конфигуратор) прочитатьФайлИнформации() (str string){
+
+	log.Debugf("Читаю файла информации 1С: %s", c.ФайлИнформации)
+
+	b, err := ReadFileUTF16(c.ФайлИнформации) // just pass the file name
+	if err != nil {
+		log.Debugf("Обшибка чтения файла информации 1С %s: %v",c.ФайлИнформации, err)
+		//fmt.Print(err)
+	}
+
+	str = string(b) // convert content to a 'string'
+
+	return
 }
