@@ -2,8 +2,9 @@ package v8runner
 
 import (
 	"fmt"
-	log "github.com/sirupsen/logrus"
+	//log "github.com/sirupsen/logrus"
 	"./dumpMode"
+	"github.com/pkg/errors"
 )
 
 func (conf *Конфигуратор) ЗагрузитьКонфигурациюИзФайлов(КаталогЗагрузки string) (e error) {
@@ -22,7 +23,7 @@ func (conf *Конфигуратор) loadCfg(cfg string) (e error) {
 
 	c = append(c, fmt.Sprintf("/LoadCfg %s", cfg))
 
-	err := conf.выполнить(c)
+	err := conf.ВыполнитьКоманду(c)
 
 	return err
 }
@@ -33,13 +34,12 @@ func (conf *Конфигуратор) loadConfigFromFiles(dir string, pListFile 
 
 	c = append(c, fmt.Sprintf("/LoadConfigFromFiles %s", dir))
 
-	if ЗначениеЗаполнено(pListFile) {
+	if ok, _:= Exists(pListFile); ok {
 
 		if ok, _ := РежимВыгрузкиКонфигурации.РежимДоступен(format); ok {
 			c = append(c, fmt.Sprintf("-format %s", format))
 		} else {
-			return
-		}
+			return errors.New("Не корректно задач формат для загрузки")		}
 		c = append(c, fmt.Sprintf("-listFile %s", pListFile))
 
 		if updDumpInfo {
@@ -49,9 +49,7 @@ func (conf *Конфигуратор) loadConfigFromFiles(dir string, pListFile 
 
 	}
 
-	log.Debugf("Параметры запуска: %s", c)
-
-	err := conf.выполнить(c)
+	err := conf.ВыполнитьКоманду(c)
 
 	return err
 }

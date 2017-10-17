@@ -2,155 +2,126 @@ package v8runner
 
 import (
 	"testing"
+	"github.com/stretchr/testify/suite"
+	"path"
+	"./dumpMode"
+
 )
 
-func TestКонфигуратор_loadConfigFromFiles(t *testing.T) {
-	type fields struct {
-		Контекст              *Контекст
-		ФайлИнформации        string
-		ОчищатьФайлИнформации bool
-		ЭтоWindows            bool
-		ВерсияПлатформы       *ВерсияПлатформы
-		выводКоманды          string
-	}
-	type args struct {
-		dir         string
-		pListFile   string
-		format      string
-		updDumpInfo bool
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			conf := &Конфигуратор{
-				Контекст:              tt.fields.Контекст,
-				ФайлИнформации:        tt.fields.ФайлИнформации,
-				ОчищатьФайлИнформации: tt.fields.ОчищатьФайлИнформации,
-				ЭтоWindows:            tt.fields.ЭтоWindows,
-				ВерсияПлатформы:       tt.fields.ВерсияПлатформы,
-				выводКоманды:          tt.fields.выводКоманды,
-			}
-			if err := conf.loadConfigFromFiles(tt.args.dir, tt.args.pListFile, tt.args.format, tt.args.updDumpInfo); (err != nil) != tt.wantErr {
-				t.Errorf("Конфигуратор.loadConfigFromFiles() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
+const configuratuonXml = "Configuration.xml"
+
+type тестыНаЗагрузкуКонфигурацииИзФайла struct {
+	suite.Suite
+	conf                            *Конфигуратор
+	КаталогЗагрузки                 string
+	ПутьКФайлуКофигурации           string
+	ПутьКФайлуСпискаОбъектов        string
+	ФорматВыгрузки                  string
+	ОбновитьФайлИнформацииОВыгрузке bool
 }
 
-func TestКонфигуратор_loadCfg(t *testing.T) {
-	type fields struct {
-		Контекст              *Контекст
-		ФайлИнформации        string
-		ОчищатьФайлИнформации bool
-		ЭтоWindows            bool
-		ВерсияПлатформы       *ВерсияПлатформы
-		выводКоманды          string
-	}
-	type args struct {
-		cfg string
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			conf := &Конфигуратор{
-				Контекст:              tt.fields.Контекст,
-				ФайлИнформации:        tt.fields.ФайлИнформации,
-				ОчищатьФайлИнформации: tt.fields.ОчищатьФайлИнформации,
-				ЭтоWindows:            tt.fields.ЭтоWindows,
-				ВерсияПлатформы:       tt.fields.ВерсияПлатформы,
-				выводКоманды:          tt.fields.выводКоманды,
-			}
-			if err := conf.loadCfg(tt.args.cfg); (err != nil) != tt.wantErr {
-				t.Errorf("Конфигуратор.loadCfg() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
+type тестыНаЗагрузкуКонфигурацииИзФайлов struct {
+	suite.Suite
+	conf                            *Конфигуратор
+	КаталогЗагрузки                 string
+	ПутьКФайлуКофигурации           string
+	ПутьКФайлуСпискаОбъектов        string
+	ФорматВыгрузки                  string
+	ОбновитьФайлИнформацииОВыгрузке bool
+
+
 }
 
-func TestКонфигуратор_ЗагрузитьКонфигурациюИзФайла(t *testing.T) {
-	type fields struct {
-		Контекст              *Контекст
-		ФайлИнформации        string
-		ОчищатьФайлИнформации bool
-		ЭтоWindows            bool
-		ВерсияПлатформы       *ВерсияПлатформы
-		выводКоманды          string
-	}
-	type args struct {
-		ПутьКФайлуКонфигуации string
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			conf := &Конфигуратор{
-				Контекст:              tt.fields.Контекст,
-				ФайлИнформации:        tt.fields.ФайлИнформации,
-				ОчищатьФайлИнформации: tt.fields.ОчищатьФайлИнформации,
-				ЭтоWindows:            tt.fields.ЭтоWindows,
-				ВерсияПлатформы:       tt.fields.ВерсияПлатформы,
-				выводКоманды:          tt.fields.выводКоманды,
-			}
-			if err := conf.ЗагрузитьКонфигурациюИзФайла(tt.args.ПутьКФайлуКонфигуации); (err != nil) != tt.wantErr {
-				t.Errorf("Конфигуратор.ЗагрузитьКонфигурациюИзФайла() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
+func (s *тестыНаЗагрузкуКонфигурацииИзФайла) SetupSuite() {
+
+	s.ПутьКФайлуКофигурации = path.Join(pwd, "fixtures/ТестовыйФайлКонфигурации.cf")
+
 }
 
-func TestКонфигуратор_ЗагрузитьКонфигурациюИзФайлов(t *testing.T) {
-	type fields struct {
-		Контекст              *Контекст
-		ФайлИнформации        string
-		ОчищатьФайлИнформации bool
-		ЭтоWindows            bool
-		ВерсияПлатформы       *ВерсияПлатформы
-		выводКоманды          string
+func (s *тестыНаЗагрузкуКонфигурацииИзФайлов) SetupSuite() {
+
+	s.ПутьКФайлуКофигурации = path.Join(pwd, "fixtures/ТестовыйФайлКонфигурации.cf")
+	s.КаталогЗагрузки = ВременныйКаталог()
+	s.ФорматВыгрузки = РежимВыгрузкиКонфигурации.Иерархический
+
+	conf := НовыйКонфигуратор()
+	errLoad := conf.ЗагрузитьКонфигурациюИзФайла(s.ПутьКФайлуКофигурации)
+	s.NoErrorf(errLoad, "Не удалось выполнить загрузку конфигурации: %s", s.ПутьКФайлуКофигурации)
+
+	err := conf.ВыгрузитьКонфигурациюСРежимомВыгрузки(s.КаталогЗагрузки, s.ФорматВыгрузки)
+	s.NoErrorf(err, "Не удалось выполностьб выгрузку конфигурации в каталог: %s", s.КаталогЗагрузки)
+
+	xmlFile := path.Join(s.КаталогЗагрузки, configuratuonXml)
+	_, err = Exists(xmlFile)
+
+	s.NoErrorf(err, "Файл с выгруженной конфигурацией не найден: %s", xmlFile )
+
+}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайла) SetupTest() {
+
+	s.conf = НовыйКонфигуратор()
+	s.ОбновитьФайлИнформацииОВыгрузке = false
+
+}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайлов) SetupTest() {
+
+	s.conf = НовыйКонфигуратор()
+
+}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайла) TearDownSuite() {
+	ОчиститьВременныйКаталог()
+}
+
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайлов) TearDownSuite() {
+	ОчиститьВременныйКаталог()
+}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайлов) TestКонфигуратор_loadConfigFromFiles() {
+
+	err := s.conf.loadConfigFromFiles(s.КаталогЗагрузки, s.ПутьКФайлуСпискаОбъектов, s.ФорматВыгрузки, s.ОбновитьФайлИнформацииОВыгрузке)
+	s.NoError(err, "TestКонфигуратор_loadConfigFromFiles: %v", err)
+	s.Empty(s.conf.выводКоманды ,"Вывод команды %s", s.conf.выводКоманды)
+
+}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайла) TestКонфигуратор_loadCfg() {
+
+	err := s.conf.loadCfg(s.ПутьКФайлуКофигурации)
+	s.NoError(err, "TestКонфигуратор_loadCfg: %v", err)
+
+	// := conf.loadCfg(tt.args.cfg); (err != nil) != tt.wantErr {
+
+}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайла) TestКонфигуратор_ЗагрузитьКонфигурациюИзФайла() {
+
+
+	err := s.conf.ЗагрузитьКонфигурациюИзФайла(s.ПутьКФайлуКофигурации)
+	s.NoError(err, "TestКонфигуратор_loadConfigFromFiles: %v", err)
+
 	}
-	type args struct {
-		КаталогЗагрузки string
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			conf := &Конфигуратор{
-				Контекст:              tt.fields.Контекст,
-				ФайлИнформации:        tt.fields.ФайлИнформации,
-				ОчищатьФайлИнформации: tt.fields.ОчищатьФайлИнформации,
-				ЭтоWindows:            tt.fields.ЭтоWindows,
-				ВерсияПлатформы:       tt.fields.ВерсияПлатформы,
-				выводКоманды:          tt.fields.выводКоманды,
-			}
-			if err := conf.ЗагрузитьКонфигурациюИзФайлов(tt.args.КаталогЗагрузки); (err != nil) != tt.wantErr {
-				t.Errorf("Конфигуратор.ЗагрузитьКонфигурациюИзФайлов() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
+
+func (s *тестыНаЗагрузкуКонфигурацииИзФайлов) TestКонфигуратор_ЗагрузитьКонфигурациюИзФайлов() {
+
+	err := s.conf.ЗагрузитьКонфигурациюИзФайлов(s.КаталогЗагрузки)
+	s.NoError(err, "TestКонфигуратор_ЗагрузитьКонфигурациюИзФайлов: %v", err)
+
+}
+
+func Test_ТестыНаЗагрузкуКонфигурации(t *testing.T) {
+
+	suiteTester := new(тестыНаЗагрузкуКонфигурацииИзФайла)
+	suite.Run(t, suiteTester)
+
+}
+
+func Test_ТестыНаЗагрузкуКонфигурацииИзФайлов(t *testing.T) {
+
+	suiteTester := new(тестыНаЗагрузкуКонфигурацииИзФайлов)
+	suite.Run(t, suiteTester)
+
 }

@@ -8,18 +8,23 @@ import (
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
 	"bytes"
+	"math/rand"
+
 )
 
 func ВременныйКаталог() string {
 
-	userTmpDir := tempDir
+	return ВременныйКаталогСПрефисом(prefix)
+}
 
-	tmpDir, err := ioutil.TempDir(userTmpDir, prefix)
+func ВременныйКаталогСПрефисом(pre string) string {
+
+	t, err := ioutil.TempDir(tempDir, pre)
 	if err != nil {
 		panic(err)
 	}
-	tempFiles = append(tempFiles, tmpDir)
-	return tmpDir
+	tempFiles = append(tempFiles, t)
+	return t
 }
 
 func ИницализороватьВременныйКаталог() string {
@@ -30,7 +35,6 @@ func ИницализороватьВременныйКаталог() string {
 	if err != nil {
 		panic(err)
 	}
-	tempFiles = append(tempFiles, tmpDir)
 	return tmpDir
 }
 
@@ -67,7 +71,12 @@ func IsNoExist(name string) (bool, error) {
 
 func ОчиститьВременныйКаталог() {
 
-	os.RemoveAll(tempDir)
+	for  _, fileDir := range tempFiles  {
+
+		os.RemoveAll(fileDir)
+
+	}
+
 
 }
 
@@ -94,6 +103,16 @@ func ReadFileUTF16(filename string) ([]byte, error) {
 	decoded, err := ioutil.ReadAll(unicodeReader)
 	return decoded, err
 
+}
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func NewUID(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
 }
 
 

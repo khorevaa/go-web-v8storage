@@ -13,7 +13,7 @@ func (conf *Конфигуратор) СоздатьФайловуюБазуПо
 
 	if ok, err := IsNoExist(ПутьКШаблону); ok {
 
-		e = errors.WithMessage(err, "Не правильно задан параметр ПутьКШаблону: ")
+		e = errors.WithMessage(err, "Не правильно задан параметр ПутьКФайлуКофигурации: ")
 		return
 	}
 
@@ -51,7 +51,7 @@ func (conf *Конфигуратор) createFileBase(dir string, pTemplate strin
 
 	p = append(p, "/Out", conf.ФайлИнформации)
 
-	e = conf.выполнить(p)
+	e = conf.Выполнить(p)
 
 	return
 }

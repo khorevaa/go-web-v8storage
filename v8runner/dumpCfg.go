@@ -65,7 +65,7 @@ func (conf *Конфигуратор) dumpConfigToFiles(dir string, mode string,
 
 	log.Debugf("Параметры запуска: %s", c)
 
-	err := conf.выполнить(c)
+	err := conf.ВыполнитьКоманду(c)
 
 	return err
 }

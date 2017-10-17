@@ -7,13 +7,13 @@ type Error interface {
 }
 
 const (
-	prefix = "v8runner"
+	prefix = "v8r"
+	tempDBname = "TempBD_v8"
 )
 
 var (
 	tempFiles []string
 	tempDir   string = ИницализороватьВременныйКаталог()
-	workDir   string = ВременныйКаталог()
 )
 
 func ФайлИнформации(файлИнформации string) func(*Конфигуратор) {
