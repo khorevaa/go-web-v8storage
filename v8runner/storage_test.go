@@ -1,7 +1,7 @@
 package v8runner
 
 import (
-	"testing"
+	//"testing"
 	"github.com/stretchr/testify/suite"
 	"path"
 	"./dumpMode"

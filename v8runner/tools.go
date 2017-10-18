@@ -13,6 +13,7 @@ import (
 	"time"
 	"encoding/json"
 	"strings"
+	"fmt"
 )
 
 func ВременныйКаталог() string {
@@ -51,10 +52,16 @@ func ПустаяСтрока(Значение string) bool {
 
 func НовыйФайлИнформации() string {
 
-	f, err := tempfile.TempFileWithSuffix(tempDir, "", ".txt")
+	return НовыйВременныйФайл("", ".txt")
+}
+
+func НовыйВременныйФайл(p string, s string) string {
+
+	f, err := tempfile.TempFileWithSuffix(tempDir, p, s)
 	if err != nil {
 		panic(err)
 	}
+	tempFiles = append(tempFiles, f.Name())
 
 	return f.Name()
 }
@@ -134,7 +141,8 @@ func (j *JsonBirthDate) UnmarshalJSON(b []byte) error {
 	if err != nil {
 		return err
 	}
-	*j = JB(t)
+	fmt.Print(t)
+	//*j = JB(t)
 	return nil
 }
 

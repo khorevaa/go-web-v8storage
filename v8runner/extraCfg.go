@@ -27,3 +27,16 @@ func (conf *Конфигуратор) ЗапуститьВРежимеПредп
 
 	return
 }
+
+//LoadExternalDataProcessorOrReportFromFiles
+func (conf *Конфигуратор) СобратьОбработкуОтчетИзФайлов(ПапкаИcходников string, ИмяФайлаОбработки string, ДополнительныеПараметры ...string) (err error) {
+
+	var c = conf.СтандартныеПараметрыЗапускаКонфигуратора()
+
+	c = append(c,"/LoadExternalDataProcessorOrReportFromFiles", ПапкаИcходников, ИмяФайлаОбработки)
+	c = append(c, ДополнительныеПараметры...)
+
+	err = conf.ВыполнитьКоманду(c)
+
+	return
+}
