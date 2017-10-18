@@ -4,12 +4,15 @@ import (
 	"os"
 	"io/ioutil"
 	"github.com/mash/go-tempfile-suffix"
-	"github.com/shomali11/util/strings"
+	extraStrings "github.com/shomali11/util/strings"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
 	"bytes"
 	"math/rand"
 
+	"time"
+	"encoding/json"
+	"strings"
 )
 
 func ВременныйКаталог() string {
@@ -39,11 +42,11 @@ func ИницализороватьВременныйКаталог() string {
 }
 
 func ЗначениеЗаполнено(Значение string) bool {
-	return !strings.IsEmpty(Значение)
+	return !extraStrings.IsEmpty(Значение)
 }
 
 func ПустаяСтрока(Значение string) bool {
-	return strings.IsEmpty(Значение)
+	return extraStrings.IsEmpty(Значение)
 }
 
 func НовыйФайлИнформации() string {
@@ -115,4 +118,32 @@ func NewUID(n int) string {
 	return string(b)
 }
 
+// first create a type alias
+type JsonBirthDate time.Time
 
+// Add that to your struct
+type Person struct {
+	Name      string        `json:"name"`
+	BirthDate JsonBirthDate `json:"birth_date"`
+}
+
+// imeplement Marshaler und Unmarshalere interface
+func (j *JsonBirthDate) UnmarshalJSON(b []byte) error {
+	s := strings.Trim(string(b), "\"")
+	t, err := time.Parse("2006-01-02", s)
+	if err != nil {
+		return err
+	}
+	*j = JB(t)
+	return nil
+}
+
+func (j JsonBirthDate) MarshalJSON() ([]byte, error) {
+	return json.Marshal(j)
+}
+
+// Maybe a Format function for printing your date
+func (j JsonBirthDate) Format(s string) string {
+	t := time.Time(j)
+	return t.Format(s)
+}
