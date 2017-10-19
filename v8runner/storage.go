@@ -11,6 +11,7 @@ import (
 	//"os"
 )
 
+//noinspection ALL,NonAsciiCharacters,NonAsciiCharacters,NonAsciiCharacters
 const (
 	// Типы протоколов подключения
 
@@ -66,6 +67,7 @@ func НоваяИсторияХранилищаКонфигурации() *Ис�
 	}
 }
 
+//noinspection ALL,NonAsciiCharacters,NonAsciiCharacters
 func (storage *ХранилищеКонфигурации) ПрочитатьИсториюХранилища() {
 
 	ПутьКФайлуОтчетаMXL := ""
@@ -198,6 +200,7 @@ func (storage *ХранилищеКонфигурации) СоздатьХра�
 }
 
 // ConfigurationRepositoryCreate
+//noinspection ALL,NonAsciiCharacters,NonAsciiCharacters,NonAsciiCharacters
 func (storage *ХранилищеКонфигурации) СконвертироватьОтчетMXLtoJSON(ПутьКФайлуMXL string) (ПутьКФайлуJSON string, err error) {
 
 	КлючЗапуска := fmt.Sprintf("%s;%s", ПутьКФайлуMXL, ПутьКФайлуJSON)

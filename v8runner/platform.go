@@ -41,11 +41,13 @@ func ПолучитьВерсиюПоУмолчанию() (v *ВерсияПла
 	return
 }
 
+//noinspection ALL
 func ПолучитьПутьКВерсииПлатформы(ВерсияПлатформы string) {
 
 	if !strings.HasPrefix(ВерсияПлатформы, "8.") {
 		panic(fmt.Sprintf("Неверная версия платформы < %s >", ВерсияПлатформы))
 	}
+	//noinspection ALL
 	var ЭтоWindows bool = runtime.GOOS == "windows"
 
 	if ЭтоWindows {
@@ -97,6 +99,7 @@ func ПолучитьПутьКВерсииПлатформы(ВерсияПла
 
 }
 
+//noinspection ALL
 func СобратьВозможныеКаталогиУстановкиПлатформыWindows() []string {
 
 	var МассивПутей = []string{}

@@ -11,6 +11,7 @@ import (
 	//"path"
 )
 
+//noinspection NonAsciiCharacters
 type Конфигуратор struct {
 	Контекст              *Контекст
 	ФайлИнформации        string

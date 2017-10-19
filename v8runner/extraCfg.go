@@ -2,7 +2,7 @@ package v8runner
 
 import "fmt"
 
-func (conf *Конфигуратор) ЗапуститьВРежимеПредприятияCКлючемЗапуска(КлючЗапуска string, УправляемыйРежим bool, ДополнительныеПараметры ...string) (err error) {
+func (conf *Конфигуратор) ЗапуститьВРежимеПредприятияСКлючемЗапуска(КлючЗапуска string, УправляемыйРежим bool, ДополнительныеПараметры ...string) (err error) {
 
 	ДополнительныеПараметры = append(ДополнительныеПараметры, fmt.Sprintf("/C%s", КлючЗапуска))
 
@@ -29,11 +29,11 @@ func (conf *Конфигуратор) ЗапуститьВРежимеПредп
 }
 
 //LoadExternalDataProcessorOrReportFromFiles
-func (conf *Конфигуратор) СобратьОбработкуОтчетИзФайлов(ПапкаИcходников string, ИмяФайлаОбработки string, ДополнительныеПараметры ...string) (err error) {
+func (conf *Конфигуратор) СобратьОбработкуОтчетИзФайлов(ПапкаИсходников string, ИмяФайлаОбработки string, ДополнительныеПараметры ...string) (err error) {
 
 	var c = conf.СтандартныеПараметрыЗапускаКонфигуратора()
 
-	c = append(c,"/LoadExternalDataProcessorOrReportFromFiles", ПапкаИcходников, ИмяФайлаОбработки)
+	c = append(c,"/LoadExternalDataProcessorOrReportFromFiles", ПапкаИсходников, ИмяФайлаОбработки)
 	c = append(c, ДополнительныеПараметры...)
 
 	err = conf.ВыполнитьКоманду(c)

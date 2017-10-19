@@ -3,7 +3,6 @@
     <option name="myName" value="Project Default" />
     <inspection_tool class="NonAsciiCharacters" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="CHECK_FOR_NOT_ASCII_IDENTIFIER_NAME" value="false" />
-      <option name="CHECK_FOR_FILES_CONTAINING_BOM" value="true" />
     </inspection_tool>
   </profile>
 </component>
