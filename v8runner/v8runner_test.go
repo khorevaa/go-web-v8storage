@@ -2,9 +2,7 @@ package v8runner
 
 import (
 	"testing"
-	. "gopkg.in/check.v1"
 )
-
 
 // In order for 'go test' to run this suite, we need to create
 // a normal test function and pass our suite to suite.Run

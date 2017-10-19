@@ -1,18 +1,14 @@
 package v8runner
 
 import (
-	//"testing"
-	//"github.com/stretchr/testify/assert"
+	"math/rand"
 	"os"
 	"path"
-	"math/rand"
-	. "gopkg.in/check.v1"
 )
 
 var pwd, _ = os.Getwd()
 
 var _ = Suite(&ТестыНаСозданиеБазыДанных{})
-
 
 type ТестыНаСозданиеБазыДанных struct {
 	conf           *Конфигуратор
@@ -34,7 +30,6 @@ func (s *ТестыНаСозданиеБазыДанных) TearDownSuite(c *C)
 }
 
 func (s *ТестыНаСозданиеБазыДанных) TestКонфигуратор_СоздатьФайловуюБазуПоШаблону(c *C) {
-
 
 	c.Assert(s.conf.ВерсияПлатформы, NotNil)
 

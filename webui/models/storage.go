@@ -7,4 +7,3 @@ type Hotel struct {
 	Country          string
 	Price            int
 }
-

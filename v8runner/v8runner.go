@@ -7,7 +7,7 @@ type Error interface {
 }
 
 const (
-	prefix = "v8r"
+	prefix     = "v8r"
 	tempDBname = "TempBD_v8"
 )
 
@@ -26,4 +26,3 @@ func УстановитьКонтекст(контекст *Контекст) fu
 		s.Контекст = контекст
 	}
 }
-

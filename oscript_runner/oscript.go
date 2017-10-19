@@ -1,9 +1,5 @@
 package oscript
 
-import (
-//"fmt"
-)
-
 // Запускатель
 type Runner struct {
 	Path string

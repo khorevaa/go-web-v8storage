@@ -34,12 +34,13 @@ func (conf *Конфигуратор) loadConfigFromFiles(dir string, pListFile 
 
 	c = append(c, fmt.Sprintf("/LoadConfigFromFiles %s", dir))
 
-	if ok, _:= Exists(pListFile); ok {
+	if ok, _ := Exists(pListFile); ok {
 
 		if ok, _ := РежимВыгрузкиКонфигурации.РежимДоступен(format); ok {
 			c = append(c, fmt.Sprintf("-format %s", format))
 		} else {
-			return errors.New("Не корректно задач формат для загрузки")		}
+			return errors.New("Не корректно задач формат для загрузки")
+		}
 		c = append(c, fmt.Sprintf("-listFile %s", pListFile))
 
 		if updDumpInfo {

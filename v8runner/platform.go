@@ -1,14 +1,14 @@
 package v8runner
 
 import (
-	"strings"
+	"./v8config-file"
 	"fmt"
-	"runtime"
-	"path"
-	"os/exec"
 	log "github.com/sirupsen/logrus"
 	"os"
-	"./v8config-file"
+	"os/exec"
+	"path"
+	"runtime"
+	"strings"
 )
 
 const ВерсияПоУмолчанию string = "8.3"
@@ -53,8 +53,7 @@ func ПолучитьПутьКВерсииПлатформы(ВерсияПла
 	if ЭтоWindows {
 		МассивПутей := СобратьВозможныеКаталогиУстановкиПлатформыWindows()
 		log.Debugf("Массив найденных путей установки 1С: %s", МассивПутей)
-	} else
-	{
+	} else {
 
 		var КорневойПуть1С = path.Join("/opt", "1C", "v8.3")
 		var КаталогУстановкиi386 = path.Join(КорневойПуть1С, "i386")

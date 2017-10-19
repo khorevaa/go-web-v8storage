@@ -1,9 +1,9 @@
 package v8runner
 
 import (
+	"./dumpMode"
 	"fmt"
 	log "github.com/sirupsen/logrus"
-	"./dumpMode"
 )
 
 // Выгрузка конфигурации в файлы

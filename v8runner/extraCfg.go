@@ -33,7 +33,7 @@ func (conf *Конфигуратор) СобратьОбработкуОтчет
 
 	var c = conf.СтандартныеПараметрыЗапускаКонфигуратора()
 
-	c = append(c,"/LoadExternalDataProcessorOrReportFromFiles", ПапкаИсходников, ИмяФайлаОбработки)
+	c = append(c, "/LoadExternalDataProcessorOrReportFromFiles", ПапкаИсходников, ИмяФайлаОбработки)
 	c = append(c, ДополнительныеПараметры...)
 
 	err = conf.ВыполнитьКоманду(c)

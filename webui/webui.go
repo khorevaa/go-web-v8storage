@@ -1,14 +1,12 @@
 package webui
 
-
 import (
 	"net/http"
+
 	"github.com/garyburd/redigo/redis"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/GeertJohan/go.rice"
 )
-
 
 // Server implements an HTTP server which exposes a JSON API to view and manage gocraft/work items.
 type Server struct {
@@ -18,18 +16,13 @@ type Server struct {
 }
 
 type Context struct {
-
 	echo.Context
 	*Server
 	Session map[string]string
-
 }
-
-
 
 // NewServer creates and returns a new server. The 'namespace' param is the redis namespace to use. The hostPort param is the address to bind on to expose the API.
 func NewServer(namespace string, pool *redis.Pool, hostPort string) *Server {
-
 
 	e := echo.New()
 
@@ -46,8 +39,7 @@ func NewServer(namespace string, pool *redis.Pool, hostPort string) *Server {
 	// Debug mode
 	e.Debug = true
 
-
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{ AllowOrigins: []string{"*"}, AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE}, }))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{AllowOrigins: []string{"*"}, AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE}}))
 
 	assetHandler := http.FileServer(rice.MustFindBox("app").HTTPBox())
 	// serves the index.html from rice
@@ -55,7 +47,6 @@ func NewServer(namespace string, pool *redis.Pool, hostPort string) *Server {
 
 	// servers other static files
 	e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", assetHandler)))
-
 
 	return server
 }

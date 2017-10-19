@@ -2,24 +2,19 @@ package v8runner
 
 import (
 	//"testing"
-	"path"
 	log "github.com/sirupsen/logrus"
-	. "gopkg.in/check.v1"
-
+	"path"
 )
 
 var _ = Suite(&тестыНаДополнительныйФункционал{})
 
 type тестыНаДополнительныйФункционал struct {
-	conf                            *Конфигуратор
-	КаталогЗагрузки                 string
-	ПутьКФайлуОбработки             string
-
+	conf                *Конфигуратор
+	КаталогЗагрузки     string
+	ПутьКФайлуОбработки string
 }
 
-
 func (s *тестыНаДополнительныйФункционал) SetUpSuite(c *C) {
-
 
 	log.SetLevel(log.DebugLevel)
 
@@ -32,7 +27,6 @@ func (s *тестыНаДополнительныйФункционал) SetUpTe
 	s.conf = НовыйКонфигуратор()
 	s.ПутьКФайлуОбработки = НовыйВременныйФайл("Обработка", ".epf")
 }
-
 
 func (s *тестыНаДополнительныйФункционал) TearDownSuite(c *C) {
 	ОчиститьВременныйКаталог()
