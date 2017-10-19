@@ -14,7 +14,7 @@
 
 package main
 
-import "github/khorevaa/go-web-v8storage/cmd"
+import "./cmd"
 
 func main() {
 	cmd.Execute()

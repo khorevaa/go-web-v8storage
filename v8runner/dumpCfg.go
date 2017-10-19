@@ -56,7 +56,7 @@ func (conf *Конфигуратор) dumpConfigToFiles(dir string, mode string,
 		//Если ПроверитьВозможностьОбновленияФайловВыгрузки(КаталогВыгрузки, ПутьКФайлуВерсийДляСравнения, ФорматВыгрузки) Тогда
 		c = append(c, "-update", "-force")
 		if ЗначениеЗаполнено(pChFile) {
-			c = append(c, fmt.Sprintf("-getChanges %s", pChFile));
+			c = append(c, fmt.Sprintf("-getChanges %s", pChFile))
 		}
 		if ЗначениеЗаполнено(pChFile) {
 			c = append(c, fmt.Sprintf("-configDumpInfoForChanges %s", pVersionFile))

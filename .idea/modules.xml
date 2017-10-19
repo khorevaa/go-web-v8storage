@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/v8runner/dumpMode/dumpMode.iml" filepath="$PROJECT_DIR$/v8runner/dumpMode/dumpMode.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/go-web-v8storage.iml" filepath="$PROJECT_DIR$/.idea/go-web-v8storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8runner.iml" filepath="$PROJECT_DIR$/v8runner/v8runner.iml" />
     </modules>
   </component>
 </project>

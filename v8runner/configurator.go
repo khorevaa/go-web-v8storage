@@ -144,7 +144,7 @@ func (conf *Конфигуратор) Выполнить (args []string) (e erro
 	conf.установитьВыводКоманды(conf.прочитатьФайлИнформации())
 
 	if exitCode == 1 {
-		e = errors.New(conf.выводКоманды);
+		e = errors.New(conf.выводКоманды)
 	}
 
 	log.Debugf("КодЗавершения команды: %v", exitCode)
