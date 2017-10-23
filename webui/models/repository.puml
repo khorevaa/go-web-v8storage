@@ -1,0 +1,28 @@
+@startuml
+
+class storage {
+
++server_id : int64
++project_id : int64
++void() getProject
+
+name
+
+}
+
+class project {
++id : int64
++key : string
++name : string
++description : string
+
+}
+
+project -> storage
+enum TimeUnit {
+DAYS
+HOURS
+MINUTES
+}
+
+@enduml

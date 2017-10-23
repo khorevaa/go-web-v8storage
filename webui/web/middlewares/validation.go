@@ -1,12 +1,10 @@
 package middlewares
 
-
-
 import (
 	"bytes"
 	"net/http"
 
-	validator "gopkg.in/bluesuncorp/validator.v9"
+	"gopkg.in/bluesuncorp/validator.v9"
 
 	"encoding/json"
 

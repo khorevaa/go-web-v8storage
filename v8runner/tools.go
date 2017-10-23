@@ -1,19 +1,19 @@
 package v8runner
 
 import (
-	"os"
-	"io/ioutil"
+	"bytes"
 	"github.com/mash/go-tempfile-suffix"
 	extraStrings "github.com/shomali11/util/strings"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
-	"bytes"
+	"io/ioutil"
 	"math/rand"
+	"os"
 
-	"time"
 	"encoding/json"
-	"strings"
 	"fmt"
+	"strings"
+	"time"
 )
 
 func ВременныйКаталог() string {
@@ -81,12 +81,11 @@ func IsNoExist(name string) (bool, error) {
 
 func ОчиститьВременныйКаталог() {
 
-	for  _, fileDir := range tempFiles  {
+	for _, fileDir := range tempFiles {
 
 		os.RemoveAll(fileDir)
 
 	}
-
 
 }
 
