@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/v8runner/dumpMode/dumpMode.iml" filepath="$PROJECT_DIR$/v8runner/dumpMode/dumpMode.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/go-web-v8storage.iml" filepath="$PROJECT_DIR$/.idea/go-web-v8storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webui/middlewares/middlewares.iml" filepath="$PROJECT_DIR$/webui/middlewares/middlewares.iml" />
       <module fileurl="file://$PROJECT_DIR$/v8runner/v8runner.iml" filepath="$PROJECT_DIR$/v8runner/v8runner.iml" />
       <module fileurl="file://$PROJECT_DIR$/webui/webui.iml" filepath="$PROJECT_DIR$/webui/webui.iml" />
     </modules>
