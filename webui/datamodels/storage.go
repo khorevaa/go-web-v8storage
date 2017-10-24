@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type storage struct {
+type Storage struct {
 	gorm.Model
 	ID               int64  `json:"id" form:"id"`
 	Project          *project
@@ -25,7 +25,7 @@ type storage struct {
 
 type storageInfo struct {
 	ID             int64
-	Storage        storage
+	Storage        Storage
 	ProductName    string
 	BasicRelease   string
 	CurrentRelease string
@@ -33,7 +33,7 @@ type storageInfo struct {
 }
 
 type storageHistory struct {
-	Storage    storage
+	Storage    Storage
 	VersionNum int64
 	DateTime   time.Time
 	Author     storageUser
@@ -43,7 +43,7 @@ type storageHistory struct {
 type storageUser struct {
 	gorm.Model
 	ID      int64 `json:"id" form:"id"`
-	Storage storage
+	Storage Storage
 	Login   string
 	Role    string
 	Disable bool

@@ -1,21 +1,16 @@
 package controllers
 
 import (
-	"./api"
-	"github.com/labstack/echo"
+	"../../bootstrap"
+	//"../middleware"
+	"../../services"
 )
 
-type Контроллер struct {
-	HTTPМетод  string
-	Путь       string
-	Группа     string
-	Обработчик echo.HandlerFunc
-}
+// Configure registers the necessary routes to the app.
+func Configure(b *bootstrap.Bootstrapper) {
 
-var СписокКонтроллеров []Контроллер
-
-func ЗарегистрироватьКонтроллеры(e *echo.Echo) {
-
-	e.Group("/api/", api.Middleware)
+	b.Controller("/storages",
+		new(StorageController),
+		services.NewStorageService())
 
 }

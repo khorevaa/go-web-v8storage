@@ -1,0 +1,9 @@
+debug: false
+listen: localhost:9000
+
+postgres:
+  host: localhost
+  database: postgres
+  user: postgres
+  password: 123
+  ssl: false

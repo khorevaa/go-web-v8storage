@@ -1,20 +1,21 @@
-package service
+package datasource
 
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	c "../config"
 )
 
 var DB *gorm.DB
 
 func init() {
-	dbinfo := "host=" + Config.Postgres.Host +
-		" dbname=" + Config.Postgres.Database +
-		" user=" + Config.Postgres.User +
-		" password=" + Config.Postgres.Password +
+	dbinfo := "host=" + c.Config.Postgres.Host +
+		" dbname=" + c.Config.Postgres.Database +
+		" user=" + c.Config.Postgres.User +
+		" password=" + c.Config.Postgres.Password +
 		" sslmode="
 
-	if Config.Postgres.SSL {
+	if c.Config.Postgres.SSL {
 		dbinfo += "enable"
 	} else {
 		dbinfo += "disable"

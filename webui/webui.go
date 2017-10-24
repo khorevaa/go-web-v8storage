@@ -3,12 +3,12 @@ package main
 import (
 	"./bootstrap"
 	"./middleware/identity"
-	"./routes"
+	"./web/controllers"
 )
 
-var app = bootstrap.New("Awesome App", "kataras2006@hotmail.com",
+var app = bootstrap.New("Управление серверами хранилищ 1С ", "horevaa@yandex.ru",
 	identity.Configure,
-	routes.Configure,
+	controllers.Configure,
 )
 
 func init() {

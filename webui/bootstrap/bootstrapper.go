@@ -9,6 +9,8 @@ import (
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
 	"github.com/kataras/iris/sessions"
+	//	"os"
+	//	"fmt"
 )
 
 type Configurator func(*Bootstrapper)
@@ -20,6 +22,7 @@ type Bootstrapper struct {
 	AppSpawnDate time.Time
 
 	Sessions *sessions.Sessions
+
 }
 
 // New returns a new Bootstrapper.
@@ -40,7 +43,7 @@ func New(appName, appOwner string, cfgs ...Configurator) *Bootstrapper {
 
 // SetupViews loads the templates.
 func (b *Bootstrapper) SetupViews(viewsDir string) {
-	b.RegisterView(iris.HTML(viewsDir, ".html").Layout("shared/layout.html"))
+	b.RegisterView(iris.HTML(viewsDir, ".html").Layout("shared/layout.html").Reload(true))
 }
 
 // SetupSessions initializes the sessions, optionally.
@@ -68,7 +71,7 @@ func (b *Bootstrapper) SetupErrorHandlers() {
 
 		ctx.ViewData("Err", err)
 		ctx.ViewData("Title", "Error")
-		ctx.View("shared/error.html")
+		ctx.View("views/shared/error.html")
 	})
 }
 
@@ -83,7 +86,11 @@ const (
 //
 // Returns itself.
 func (b *Bootstrapper) Bootstrap() *Bootstrapper {
-	b.SetupViews("./views")
+
+	//var pwd, _ = os.Getwd()
+	//fmt.Printf("pwd: %s", pwd)
+
+	b.SetupViews("views")
 	b.SetupSessions(24*time.Hour,
 		[]byte("the-big-and-secret-fash-key-here"),
 		[]byte("lot-secret-of-characters-big-too"),
@@ -91,7 +98,7 @@ func (b *Bootstrapper) Bootstrap() *Bootstrapper {
 	b.SetupErrorHandlers()
 
 	// static files
-	b.Favicon(StaticAssets + Favicon)
+	//b.Favicon(StaticAssets + Favicon)
 	b.StaticWeb(StaticAssets[1:len(StaticAssets)-1], StaticAssets)
 
 	// middleware, after static files
