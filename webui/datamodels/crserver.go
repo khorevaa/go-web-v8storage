@@ -2,14 +2,19 @@ package datamodels
 
 import "github.com/jinzhu/gorm"
 
-type crserver struct {
+type Crserver struct {
 	gorm.Model
-	ID        int64
 	Address   string
 	Version   string
 	BinPath   string
 	Port      string
 	Range     string
 	Directory string
-	Tags      []string
+	Tags      []*Tag `orm:"rel(m2m)"`
+}
+
+type Tag struct {
+	gorm.Model
+	tag       string
+	Crservers []*Crserver `orm:"reverse(many)"`
 }

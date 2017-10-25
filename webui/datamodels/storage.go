@@ -7,43 +7,41 @@ import (
 
 type Storage struct {
 	gorm.Model
-	ID               int64  `json:"id" form:"id"`
-	Project          *project
-	Crserver         *crserver
+	Project          *Project
+	Crserver         *Crserver
 	BranchName       string
-	Description      string `json:"Description" form:"Description"`
+	Description      string       `json:"Description" form:"Description"`
 	User_ID          *User
 	HistoryUpdatedAt time.Time
 	ConnectLogin     string
 	ConnectPassword  string
 	Disable          bool
 	Type             string
-	StorageInfo      *storageInfo
-	StorageUsers     []storageUser
-	StorageHistory   []storageHistory
+	StorageInfo      *StorageInfo `orm:"null;rel(one);on_delete(set_null)"`
+	StorageUsers     []*StorageUser
+	StorageHistory   []*StorageHistory
 }
 
-type storageInfo struct {
+type StorageInfo struct {
 	ID             int64
-	Storage        Storage
+	Storage        *Storage `orm:"reverse(one)"`
 	ProductName    string
 	BasicRelease   string
 	CurrentRelease string
 	BasicCommit    string
 }
 
-type storageHistory struct {
-	Storage    Storage
+type StorageHistory struct {
+	Storage    *Storage
 	VersionNum int64
 	DateTime   time.Time
-	Author     storageUser
+	Author     *StorageUser
 	Comment    string
 }
 
-type storageUser struct {
+type StorageUser struct {
 	gorm.Model
-	ID      int64 `json:"id" form:"id"`
-	Storage Storage
+	Storage *Storage
 	Login   string
 	Role    string
 	Disable bool

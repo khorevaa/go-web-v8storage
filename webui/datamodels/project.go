@@ -2,7 +2,7 @@ package datamodels
 
 import "github.com/jinzhu/gorm"
 
-type project struct {
+type Project struct {
 	gorm.Model
 	Key         string `json:"key" form:"key"`
 	Name        string `json:"name" form:"name"`
@@ -11,9 +11,9 @@ type project struct {
 	ShortKey    string
 }
 
-type defaultStorageUsers struct {
+type DefaultStorageUsers struct {
 	gorm.Model
-	Project      *project
+	Project      *Project
 	Login        string
 	Password     string
 	Role         string

@@ -2,19 +2,18 @@ package main
 
 import (
 	"./bootstrap"
-	"./middleware/identity"
-	"./web/controllers"
+	"./controllers"
+	"./datasource"
+	//"github.com/astaxie/beego"
 )
 
-var app = bootstrap.New("Управление серверами хранилищ 1С ", "horevaa@yandex.ru",
-	identity.Configure,
-	controllers.Configure,
-)
+var app = bootstrap.New(datasource.Configure, controllers.Configure)
 
 func init() {
 	app.Bootstrap()
 }
 
 func main() {
-	app.Listen(":8080")
+
+	app.Listen()
 }
