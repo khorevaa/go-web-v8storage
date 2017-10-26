@@ -63,7 +63,7 @@
             </li>
             <li class="dropdown li-border">
                 <a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">
-                    Хорев А.А. {{.loginUserName}}<span class="caret"></span>
+                    {{.loginUserName}}<span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="/logout">Выйти</a></li>
@@ -96,7 +96,7 @@
             <div class="sBox">
                 <ul class="navContent">
                     <li {{if eq .curRoute
-                    "main.index"}}class="active"{{end}} id="home_page">
+                    "main.index"}} class="active"{{end}} id="home_page" }} />
                     <a href="/">
                         <span class="sublist-icon glyphicon glyphicon-home"></span><span
                         class="sub-title">Главная</span>

@@ -55,7 +55,7 @@ func getDBConnection() *gorm.DB {
 	dbPass := beego.AppConfig.String("db.password")
 	conn, err := Connect(dbHost, dbName, dbUser, dbPass)
 	if err != nil {
-		panic(err.Error())
+		//panic(err.Error())
 	}
 
 	return conn

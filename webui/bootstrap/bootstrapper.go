@@ -1,8 +1,14 @@
 package bootstrap
 
 import (
+	"fmt"
+	"html/template"
+	"path/filepath"
+	"strings"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/session"
+	"github.com/yosssi/ace"
 )
 
 type Configurator func(*Bootstrapper)
@@ -27,19 +33,32 @@ func New(cfgs ...Configurator) *Bootstrapper {
 	return b
 }
 
-
 // Bootstrap prepares our application.
 //
 // Returns itself.
 func (b *Bootstrapper) Bootstrap() *Bootstrapper {
+
 	beego.AddViewPath("views")
 
 	b.sessionConfig = &session.ManagerConfig{
 		CookieName: "jigsessionid",
 		Gclifetime: 3600,
 	}
-
 	beego.BConfig.WebConfig.Session.SessionOn = true
+
+	beego.AddTemplateEngine("ace", func(root, path string, funcs template.FuncMap) (*template.Template, error) {
+		aceOptions := &ace.Options{DynamicReload: true, FuncMap: funcs}
+		aceBasePath := filepath.Join(root, "base/base")
+		aceInnerPath := filepath.Join(root, strings.TrimSuffix(path, ".ace"))
+
+		tpl, err := ace.Load(aceBasePath, aceInnerPath, aceOptions)
+		fmt.Errorf("error loading ace template: %v", tpl)
+		if err != nil {
+			return nil, fmt.Errorf("error loading ace template: %v", err)
+		}
+
+		return tpl, nil
+	})
 
 	// Set up global session management
 	//beego.LoadAppConfig("yaml", "conf/app.yaml")
