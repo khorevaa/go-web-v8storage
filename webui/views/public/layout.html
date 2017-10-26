@@ -95,8 +95,7 @@
         <div class="subNavBox">
             <div class="sBox">
                 <ul class="navContent">
-                    <li {{if eq .curRoute
-                    "main.index"}} class="active"{{end}} id="home_page" }} />
+                    <li {{if eq .curRoute "main.index"}} class="active"{{end}} id="home_page" }} />
                     <a href="/">
                         <span class="sublist-icon glyphicon glyphicon-home"></span><span
                         class="sub-title">Главная</span>
@@ -228,7 +227,7 @@
             $("link[title='" + style + "']").removeAttr("disabled");
 
             $.cookie('mystyle', style, {expires: 7}); // 存储一个带7天期限的 cookie
-        })
+        });
         var cookie_style = $.cookie("mystyle");
         if (cookie_style != null) {
             $("link[title!='']").attr("disabled", "disabled");
@@ -252,7 +251,7 @@
             }
             // 修改数字控制速度， slideUp(500)控制卷起速度
             $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(300);
-        })
+        });
         /*左侧导航栏缩进功能*/
         $(".left-main .sidebar-fold").click(function () {
             if ($(this).parent().attr('class') == "left-main left-full") {
@@ -270,7 +269,7 @@
                 $(this).parent().parent().find(".right-product").addClass("right-full");
 
             }
-        })
+        });
 
         /*左侧鼠标移入提示功能*/
         $(".sBox ul li").mouseenter(function () {
@@ -330,7 +329,7 @@
         for (var k in o)
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
-    }
+    };
 
     $(function () {
         $('.subnavbar').find('li').each(function (i) {
