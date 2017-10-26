@@ -20,17 +20,17 @@
         <div class="search-box row">
             <div class="col-md-4">
                 <div class="btn-group pull-left" role="group" aria-label="...">
-                    <a href='{{urlfor "GroupController.Add"}}' class="btn btn-primary"><span
-                        class="glyphicon glyphicon-plus"></span> 新增分类</a>
+                    <a href='{{urlfor "StorageController.Add"}}' class="btn btn-primary"><span
+                        class="glyphicon glyphicon-plus"></span> Создать новое хранилище</a>
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-edit"></span> 批量操作
+                            <span class="glyphicon glyphicon-edit"></span> Редактировать
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:;" onclick="javascript:batch('delete');"><span
-                                class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> 删除</a></li>
+                                class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Удалить</a></li>
                         </ul>
                     </div>
                 </div>
@@ -51,23 +51,26 @@
                     <tr>
                         <td><input type="checkbox" name="all_check"/></td>
                         <td>ID</td>
-                        <td width="20%">分类名称</td>
-                        <td>描述</td>
-                        <td width="25%">操作</td>
+                        <td>Проект</td>
+                        <td>Описание</td>
+                        <td>Имя ветки</td>
+                        <td>Действие</td>
                     </tr>
                     </thead>
                     <tbody>
                     {{range $k,$v := .list}}
                     <tr>
-                        <td class="chk"><input type="checkbox" name="ids" value="{{$v.Id}}"/></td>
-                        <td class="center">{{$v.Id}}</td>
-                        <td>{{$v.GroupName}}</td>
+                        <td class="chk"><input type="checkbox" name="ids" value="{{$v.ID}}"/></td>
+                        <td class="center">{{$v.ID}}</td>
+                        <td>{{$v.Project}}</td>
                         <td>{{$v.Description}}</td>
+                        <td>{{$v.BranchName}}</td>
+
 
                         <td>
 
-                            <a class="btn btn-info  btn-xs" href="{{urlfor " GroupController.Edit"}}?id={{$v.Id}}">
-                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span> 编辑
+                            <a class="btn btn-info  btn-xs" href="{{urlfor " StorageController.Edit"}}?id={{$v.ID}}">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Редактировать
                             </a>
                         </td>
                     </tr>
@@ -97,9 +100,7 @@
             if (action == 'delete') {
                 if (!confirm("确定要删除所选吗？")) return;
             }
-            var url = "{{urlfor "
-            GroupController.Batch
-            "}}";
+            var url = "{{urlfor " StorageController.Batch"}}";
             $.post(url + "?action=" + action, $("#form-list").serialize(), function (out) {
                 if (out.status != 0) {
                     alert_message(out.msg, "alert-danger", "alert-success");

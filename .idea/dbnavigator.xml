@@ -25,15 +25,23 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
-        <schema name="information_schema" object-types="function, table, view" />
         <schema name="pg_catalog" object-types="column, function, table, view" />
-        <schema name="public" object-types="column, function, table, view" />
+        <schema name="public" object-types="function, table, view" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
-      <console name="PG" type="STANDARD"><![CDATA[select * from users]]></console>
+      <console name="PG" type="STANDARD"><![CDATA[select * from storages
+insert into storages  (branch_name, description, type, project_id) VALUES
+    ('B6717', 'Tampopo','Comedy', 1),
+    ('HG120', 'The Dinner Game', 'Comedy' , 1); 
+
+select * from projects
+
+insert into projects  (name, description, key) VALUES
+    ('B6717', 'Tampopo','Comedy'),
+    ('HG120', 'The Dinner Game', 'Comedy');]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
@@ -270,6 +278,7 @@
           <content-type name="PL/SQL" enabled="true" />
           <content-type name="JPA QL" enabled="true" />
           <content-type name="JavaScript" enabled="true" />
+          <content-type name="PHP" enabled="true" />
           <content-type name="JSP" enabled="true" />
           <content-type name="JSPx" enabled="true" />
           <content-type name="Groovy" enabled="true" />
@@ -462,7 +471,7 @@
         <debug-execution-timeout value="600" />
         <focus-result value="false" />
         <prompt-execution value="false" />
-        <target-connection value="ASK" />
+        <target-connection value="MAIN" />
       </statement-execution>
       <script-execution>
         <command-line-interfaces />

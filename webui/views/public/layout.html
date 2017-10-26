@@ -33,7 +33,7 @@
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <li class="li-border">
-                <a class="mystyle-color" href="#" style="font-size: 20px">{{.siteName}} <span style="font-size: 12px"> v{{.version}}</span></a>
+                <a class="mystyle-color" href="#" style="font-size: 20px">{{.siteName}} <span style="font-size: 12px">{{.version}}</span></a>
             </li>
         </ul>
 
@@ -69,19 +69,7 @@
                     <li><a href="/logout">Выйти</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">
-                    Цвет<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu changecolor">
-                    <li id="blue"><a href="#">蓝色</a></li>
-                    <li class="divider"></li>
-                    <li id="green"><a href="#">绿色</a></li>
-                    <li class="divider"></li>
-                    <li id="orange"><a href="#">橙色</a></li>
-                </ul>
-            </li>
-        </ul>
+         </ul>
     </div>
 </nav>
 
@@ -112,8 +100,7 @@
                 </div>
                 <ul class="navContent" style="display:block">
 
-                    <li {{if eq .menuTag
-                    "task"}}class="active"{{end}}>
+                    <li {{if eq .menuTag "task"}}class="active"{{end}}>
                     <div class="showtitle" style="width:100px;">
                         Задачи
                     </div>
@@ -123,23 +110,21 @@
                     </a>
                     </li>
 
-                    <li {{if eq .menuTag
-                    "group"}}class="active"{{end}}>
+                    <li {{if eq .menuTag "group"}}class="active"{{end}}>
                     <div class="showtitle" style="width:100px;">
                         Хранилища
                     </div>
-                    <a href="/group/list">
+                    <a href="/storage/list">
                         <span class="sublist-icon glyphicon glyphicon-bookmark"></span>
                         <span class="sub-title">Хранилища конфигурации</span>
                     </a>
                     </li>
-                    <li {{if eq .curRoute
-                    "help.index"}}class="active"{{end}}>
+                    <li {{if eq .curRoute "help.index"}}class="active"{{end}}>
                     <div class="showtitle" style="width:100px;">
                         Проекты
                     </div>
                     <a href="/help">
-                        <span class="sublist-icon glyphicon glyphicon-question-sign"></span>
+                        <span class="sublist-icon glyphicon glyphicon-paperclip"></span>
                         <span class="sub-title">Проекты</span>
                     </a>
                     </li>
@@ -155,8 +140,7 @@
                 </div>
                 <ul class="navContent">
 
-                    <li {{if eq .menuTag
-                    "server"}}class="active"{{end}}>
+                    <li {{if eq .menuTag "server"}}class="active"{{end}}>
                     <div class="showtitle" style="width:100px;">
                         Сервера
                     </div>
@@ -177,8 +161,7 @@
                 </div>
                 <ul class="navContent">
 
-                    <li {{if eq .curRoute
-                    "main.profile"}}class="active"{{end}}>
+                    <li {{if eq .curRoute "main.profile"}}class="active"{{end}}>
                     <div class="showtitle" style="width:100px;">
                         Мой профиль
                     </div>
@@ -346,7 +329,7 @@
 
     function setTime(initTime, serverTime) {
         ellapsedTime = new Date().getTime() - initTime;
-        $('#server-time').html('当前服务器时间: <strong>' + new Date(serverTime + ellapsedTime).Format("yyyy-MM-dd hh:mm:ss") + '</strong>');
+        $('#server-time').html('Время: <strong>' + new Date(serverTime + ellapsedTime).Format("yyyy-MM-dd hh:mm:ss") + '</strong>');
         setTimeout('setTime(' + initTime + ',' + serverTime + ');', 500);
     }
 

@@ -8,6 +8,7 @@ import (
 
 	"../libs"
 	"github.com/astaxie/beego"
+	"strconv"
 )
 
 type MainController struct {
@@ -78,17 +79,17 @@ func (this *MainController) Login() {
 			flash := beego.NewFlash()
 			errorMsg := ""
 			if err != nil || (password != "admin") {
-				errorMsg = "Ошибка автоитизации"
+				errorMsg = "Ошибка авторитизации"
 			} else {
 				//user.LastIp = this.getClientIp()
 				//user.LastLogin = time.Now().Unix()
 				//models.UserUpdate(user)
-
+				u_Id := strconv.FormatInt(user.ID, 10 )
 				authkey := libs.Md5([]byte(this.getClientIp() + "|" + username + password))
 				if remember == "yes" {
-					this.Ctx.SetCookie("auth", string(user.ID)+"|"+authkey, 7*86400)
+					this.Ctx.SetCookie("auth", u_Id+"|"+authkey, 7*86400)
 				} else {
-					this.Ctx.SetCookie("auth", string(user.ID)+"|"+authkey, 86400)
+					this.Ctx.SetCookie("auth", u_Id+"|"+authkey, 86400)
 				}
 				this.redirect(beego.URLFor("MainController.Index"))
 			}

@@ -3,40 +3,39 @@ package controllers
 import (
 	"../services"
 	"../models"
+	"../libs"
+	"github.com/astaxie/beego"
 
 )
 
 // StorageController is our /movies controller.
 type StorageController struct {
-	// mvc.C is just a lightweight lightweight alternative
-	// to the "mvc.Controller" controller type,
-	// use it when you don't need mvc.Controller's fields
-	// (you don't need those fields when you return values from the method functions).
 	BaseController
-
-	// Our MovieService, it's an interface which
-	// is binded from the main application.
 	Service services.StorageService
 }
 
+func NewStorageController() *StorageController {
+	return &StorageController{Service: services.NewStorageService()}
+}
 
-// Get returns list of the movies.
-// Demo:
-// curl -i http://localhost:8080/movies
-//
-// The correct way if you have sensitive data:
-// func (c *StorageController) Get() (results []viewmodels.Movie) {
-// 	data := c.Service.GetAll()
-//
-// 	for _, movie := range data {
-// 		results = append(results, viewmodels.Movie{movie})
-// 	}
-// 	return
-// }
-// otherwise just return the datamodels.
 func (c *StorageController) Get() {
 	// return c.Service.GetAll()
 }
+
+func (this *StorageController) List() {
+	page, _ := this.GetInt("page")
+	if page < 1 {
+		page = 1
+	}
+
+	list, count := services.NewStorageService().GetList(page, this.pageSize)
+
+	this.Data["pageTitle"] = "Список хранилищ 1С "
+	this.Data["list"] = list
+	this.Data["pageBar"] = libs.NewPager(page, int(count), this.pageSize, beego.URLFor("GroupController.List"), true).ToString()
+	this.display()
+}
+
 
 // GetBy returns a movie.
 // Demo:

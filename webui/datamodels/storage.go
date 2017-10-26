@@ -8,23 +8,26 @@ import (
 type Storage struct {
 	gorm.Model
 	Project          *Project
+	ProjectID 		 int64
 	Crserver         *Crserver
+	CrserverID 		 int64
 	BranchName       string
 	Description      string       `json:"Description" form:"Description"`
-	User_ID          *User
+	User          	 *User
+	UserID 		 	 int64
 	HistoryUpdatedAt time.Time
 	ConnectLogin     string
 	ConnectPassword  string
 	Disable          bool
 	Type             string
-	StorageInfo      *StorageInfo `orm:"null;rel(one);on_delete(set_null)"`
+	StorageInfo      StorageInfo
 	StorageUsers     []*StorageUser
 	StorageHistory   []*StorageHistory
 }
 
 type StorageInfo struct {
-	ID             int64
-	Storage        *Storage `orm:"reverse(one)"`
+	gorm.Model
+	StorageID      int64
 	ProductName    string
 	BasicRelease   string
 	CurrentRelease string

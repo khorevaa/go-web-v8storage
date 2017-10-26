@@ -15,7 +15,9 @@ func Configure(b *bootstrap.Bootstrapper) {
 
 	beego.Router("/", &MainController{}, "*:Index")
 	beego.Router("/login", &MainController{}, "*:Login")
-	beego.AutoPrefix("/storage", &StorageController{Service: services.NewStorageService()})
+	beego.Router("/logout", &MainController{}, "*:Logout")
+	beego.Router("/gettime", &MainController{}, "*:GetTime")
+	beego.AutoRouter(NewStorageController())
 
 }
 
@@ -73,7 +75,7 @@ func (this *BaseController) auth() {
 
 	if this.userId == 0 && (this.controllerName != "main" ||
 		(this.controllerName == "main" && this.actionName != "logout" && this.actionName != "login")) {
-		//this.redirect(beego.URLFor("MainController.Login"))
+		this.redirect(beego.URLFor("MainController.Login"))
 	}
 }
 

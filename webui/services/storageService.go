@@ -1,9 +1,10 @@
 package services
 
-import "../models"
 import (
 	"../datasource"
+	"../models"
 	"github.com/jinzhu/gorm"
+	//"../datamodels"
 )
 
 type StorageService interface {
@@ -11,6 +12,7 @@ type StorageService interface {
 	GetByID(id int64) (models.Storage,)
 	DeleteByID() []models.Storage
 	UpdateByID() ([]models.Storage)
+	GetList(page int, pageSize int) (r []models.Storage, c int64)
 }
 
 // NewMovieService returns the default movie service.
@@ -28,9 +30,32 @@ type storageService struct {
 
 func (s *storageService) GetAll() (r []models.Storage) {
 
-	s.db.Find(r)
+	s.db.Order("ID").Find(&r)
 	return
 }
+
+func (s *storageService) GetList(page int, pageSize int) (storages []models.Storage, count int64) {
+
+	offset := (page - 1) * pageSize
+
+	//f := []datamodels.Storage{}
+
+	//rows, err := s.db.Raw("SELECT * FROM storages").Rows()
+	//
+	//if err != nil  {
+	//	panic(err)
+	//}
+	//defer rows.Close()
+	//
+	//for rows.Next() {
+	////rows.Scan(&name, &age, &email)
+	//}
+
+	//s.db.Last(&f)
+	s.db.Preload("projects").Order("id").Limit(pageSize).Offset(offset).Find(&storages).Count(&count)
+	return
+}
+
 
 func (s *storageService) GetByID(id int64) (r models.Storage) {
 

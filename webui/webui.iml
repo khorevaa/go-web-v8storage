@@ -8,5 +8,6 @@
       <sourceFolder url="file://$MODULE_DIR$/static" type="java-resource" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="semantic-ui-DefinitelyTyped" level="application" />
   </component>
 </module>

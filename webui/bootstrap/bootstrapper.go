@@ -7,23 +7,20 @@ import (
 	"strings"
 
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/session"
+	//"github.com/astaxie/beego/session"
 	"github.com/yosssi/ace"
 )
 
 type Configurator func(*Bootstrapper)
 
-var GlobalSessions *session.Manager
 
 type Bootstrapper struct {
-	*beego.App
-	sessionConfig *session.ManagerConfig
+
 }
 
 // New returns a new Bootstrapper.
 func New(cfgs ...Configurator) *Bootstrapper {
 	b := &Bootstrapper{
-		App: beego.BeeApp,
 	}
 
 	for _, cfg := range cfgs {
@@ -40,10 +37,6 @@ func (b *Bootstrapper) Bootstrap() *Bootstrapper {
 
 	beego.AddViewPath("views")
 
-	b.sessionConfig = &session.ManagerConfig{
-		CookieName: "jigsessionid",
-		Gclifetime: 3600,
-	}
 	beego.BConfig.WebConfig.Session.SessionOn = true
 
 	beego.AddTemplateEngine("ace", func(root, path string, funcs template.FuncMap) (*template.Template, error) {
@@ -60,6 +53,8 @@ func (b *Bootstrapper) Bootstrap() *Bootstrapper {
 		return tpl, nil
 	})
 
+	//beego.GlobalSessions, _ = session.NewManager("memory", b.sessionConfig)
+
 	// Set up global session management
 	//beego.LoadAppConfig("yaml", "conf/app.yaml")
 	//beego.BConfig.WebConfig.Session.SessionOn = true
@@ -72,8 +67,7 @@ func (b *Bootstrapper) Bootstrap() *Bootstrapper {
 // Listen starts the http server with the specified "addr".
 func (b *Bootstrapper) Listen() {
 
-	beego.GlobalSessions, _ = session.NewManager("memory", b.sessionConfig)
 	//go beego.GlobalSessions.GC()
+	beego.Run()
 
-	b.Run()
 }

@@ -163,12 +163,12 @@ body {
 }
 
 .left-full {
-    width: 160px;
+    width: 200px;
     display: block;
 }
 
 .right-full {
-    left: 160px;
+    left: 200px;
 }
 
 .left-off {
