@@ -49,12 +49,12 @@
                 <table class="table table-bordered table-header">
                     <thead>
                     <tr>
-                        <td><input type="checkbox" name="all_check"/></td>
-                        <td>ID</td>
-                        <td>Проект</td>
-                        <td>Описание</td>
-                        <td>Имя ветки</td>
-                        <td>Действие</td>
+                        <td class="th-lg"><input type="checkbox" name="all_check"/></td>
+                        <td class="th-lg">ID<i class="fa fa-sort ml-1"></i></td>
+                        <td class="th-lg">Проект<i class="fa fa-sort ml-1"></i></td>
+                        <td class="th-lg">Описание<i class="fa fa-sort ml-1"></i></td>
+                        <td class="th-lg">Имя ветки<i class="fa fa-sort ml-1"></i></td>
+                        <td class="th-lg">Действие<i class="fa fa-sort ml-1"></i></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +62,7 @@
                     <tr>
                         <td class="chk"><input type="checkbox" name="ids" value="{{$v.ID}}"/></td>
                         <td class="center">{{$v.ID}}</td>
-                        <td>{{$v.Project}}</td>
+                        <td>{{$v.Project.Name}}</td>
                         <td>{{$v.Description}}</td>
                         <td>{{$v.BranchName}}</td>
 

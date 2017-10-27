@@ -25,8 +25,10 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
-        <schema name="pg_catalog" object-types="column, function, table, view" />
-        <schema name="public" object-types="function, table, view" />
+        <schema name="information_schema" object-types="function, table, view" />
+        <schema name="pg_catalog" object-types="function, table, view" />
+        <schema name="pg_temp_1" object-types="function, table, view" />
+        <schema name="public" object-types="column, function, table, view" />
       </connection>
     </loaded-nodes>
   </component>
@@ -34,14 +36,15 @@
     <connection id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
       <console name="PG" type="STANDARD"><![CDATA[select * from storages
 insert into storages  (branch_name, description, type, project_id) VALUES
-    ('B6717', 'Tampopo','Comedy', 1),
-    ('HG120', 'The Dinner Game', 'Comedy' , 1); 
+    ('Тестовое хранилище', 'Tampopo','Comedy', 2),
+
 
 select * from projects
 
 insert into projects  (name, description, key) VALUES
-    ('B6717', 'Tampopo','Comedy'),
-    ('HG120', 'The Dinner Game', 'Comedy');]]></console>
+    ('Тестовый проект', 'Tampopo','Comedy'),
+
+select * from _pg_user_mappings]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
@@ -278,7 +281,6 @@ insert into projects  (name, description, key) VALUES
           <content-type name="PL/SQL" enabled="true" />
           <content-type name="JPA QL" enabled="true" />
           <content-type name="JavaScript" enabled="true" />
-          <content-type name="PHP" enabled="true" />
           <content-type name="JSP" enabled="true" />
           <content-type name="JSPx" enabled="true" />
           <content-type name="Groovy" enabled="true" />
@@ -290,7 +292,6 @@ insert into projects  (name, description, key) VALUES
           <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Flex" enabled="true" />
-          <content-type name="Bash" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
       </qualified-text-editor>

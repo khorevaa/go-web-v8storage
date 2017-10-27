@@ -1,12 +1,13 @@
 package datasource
 
 import (
-	"github.com/astaxie/beego"
-	_ "github.com/lib/pq"
-	"../datamodels"
-	"../bootstrap"
-	"github.com/jinzhu/gorm"
 	"fmt"
+
+	"../bootstrap"
+	"../datamodels"
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 )
 
 // Configure registers the necessary routes to the app.
@@ -55,7 +56,7 @@ func getDBConnection() *gorm.DB {
 	dbPass := beego.AppConfig.String("db.password")
 	conn, err := Connect(dbHost, dbName, dbUser, dbPass)
 	if err != nil {
-		//panic(err.Error())
+		panic(err.Error())
 	}
 
 	return conn

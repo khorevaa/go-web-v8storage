@@ -9,9 +9,9 @@ import (
 
 type StorageService interface {
 	GetAll() []models.Storage
-	GetByID(id int64) (models.Storage,)
+	GetByID(id int64) models.Storage
 	DeleteByID() []models.Storage
-	UpdateByID() ([]models.Storage)
+	UpdateByID() []models.Storage
 	GetList(page int, pageSize int) (r []models.Storage, c int64)
 }
 
@@ -52,10 +52,9 @@ func (s *storageService) GetList(page int, pageSize int) (storages []models.Stor
 	//}
 
 	//s.db.Last(&f)
-	s.db.Preload("projects").Order("id").Limit(pageSize).Offset(offset).Find(&storages).Count(&count)
+	s.db.Preload("Project").Order("id").Limit(pageSize).Offset(offset).Find(&storages).Count(&count)
 	return
 }
-
 
 func (s *storageService) GetByID(id int64) (r models.Storage) {
 
