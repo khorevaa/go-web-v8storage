@@ -25,27 +25,49 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
-        <schema name="information_schema" object-types="function, table, view" />
         <schema name="pg_catalog" object-types="function, table, view" />
-        <schema name="pg_temp_1" object-types="function, table, view" />
-        <schema name="public" object-types="column, function, table, view" />
+        <schema name="public" object-types="column, constraint, function, index, sequence, table, dataset trigger, view" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
       <console name="PG" type="STANDARD"><![CDATA[select * from storages
-insert into storages  (branch_name, description, type, project_id) VALUES
-    ('Тестовое хранилище', 'Tampopo','Comedy', 2),
+insert into storages  (branch_name, description, type, project_id, crserver_id) VALUES
+    ('Тестовое хранилище', 'Tampopo','Comedy', 2, 1),
 
 
 select * from projects
 
+
+select * from tags
+
+
+
+select * from storage_infos
+
 insert into projects  (name, description, key) VALUES
     ('Тестовый проект', 'Tampopo','Comedy'),
 
-select * from _pg_user_mappings]]></console>
+insert into crservers  (address) VALUES
+    ('Тестовый сервер'),
+
+drop table projects
+
+insert into tags (text, trackable_id, trackable_type) VALUES
+    ('dev', 1, 'crserver'),]]></console>
     </connection>
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.storages" active-filter-id="EMPTY_FILTER" />
+    <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.projects" active-filter-id="EMPTY_FILTER" />
+    <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.tags" active-filter-id="EMPTY_FILTER" />
+    <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.crservers" active-filter-id="0d7a4a3f-023f-4398-bb2b-837e56282a9a">
+      <filter id="0d7a4a3f-023f-4398-bb2b-837e56282a9a" name="1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="1" active="true" />
+      </filter>
+    </filter-list>
+    <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.default_storage_users" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -90,7 +112,7 @@ select * from _pg_user_mappings]]></console>
           <password value="MTIz" />
         </database>
         <properties>
-          <auto-commit value="false" />
+          <auto-commit value="true" />
         </properties>
         <ssh-settings>
           <active value="false" />
@@ -109,7 +131,7 @@ select * from _pg_user_mappings]]></console>
           <connect-automatically value="true" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="true" />
-          <environment-type value="default" />
+          <environment-type value="development" />
           <idle-time-to-disconnect value="30" />
           <password-expiry-time value="10" />
           <max-connection-pool-size value="7" />
@@ -281,6 +303,7 @@ select * from _pg_user_mappings]]></console>
           <content-type name="PL/SQL" enabled="true" />
           <content-type name="JPA QL" enabled="true" />
           <content-type name="JavaScript" enabled="true" />
+          <content-type name="PHP" enabled="true" />
           <content-type name="JSP" enabled="true" />
           <content-type name="JSPx" enabled="true" />
           <content-type name="Groovy" enabled="true" />
@@ -289,9 +312,9 @@ select * from _pg_user_mappings]]></console>
           <content-type name="GSP" enabled="true" />
           <content-type name="ASP" enabled="true" />
           <content-type name="VTL" enabled="true" />
-          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Flex" enabled="true" />
+          <content-type name="Bash" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
       </qualified-text-editor>

@@ -1,22 +1,23 @@
 package datamodels
 
-import "github.com/jinzhu/gorm"
-
 type Project struct {
-	gorm.Model
+	BaseModel
 	Key         string `json:"key" form:"key"`
 	Name        string `json:"name" form:"name"`
 	Description string `json:"description" form:"description"`
 	Picture     []byte
 	ShortKey    string
+	Tags        []*Tag `pg:",polymorphic:Trackable"`
 }
 
 type DefaultStorageUsers struct {
-	gorm.Model
-	Project      *Project
+	BaseModel
+	Project      Project
+	ProjectID    int64
 	Login        string
 	Password     string
 	Role         string
-	User         *User
+	User         User
+	UserID       int64
 	BranchRegexp string
 }

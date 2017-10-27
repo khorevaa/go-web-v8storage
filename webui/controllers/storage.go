@@ -2,7 +2,8 @@ package controllers
 
 import (
 	"../services"
-	"../models"
+	models "../datamodels"
+	//"../models"
 	"../libs"
 	"github.com/astaxie/beego"
 

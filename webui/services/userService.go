@@ -3,7 +3,7 @@ package services
 import "../models"
 import (
 	"../datasource"
-	"github.com/jinzhu/gorm"
+	"github.com/go-pg/pg"
 )
 
 type UserService interface {
@@ -21,13 +21,13 @@ func NewUserService() *userService {
 }
 
 type userService struct {
-	db        *gorm.DB
+	db        *pg.DB
 	tableName string
 }
 
 func (s *userService) GetAll() (r []models.User) {
 
-	s.db.Find(r)
+	s.db.Model(&r).Select(r)
 
 	return
 }

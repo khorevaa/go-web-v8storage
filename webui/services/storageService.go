@@ -2,9 +2,9 @@ package services
 
 import (
 	"../datasource"
-	"../models"
-	"github.com/jinzhu/gorm"
-	//"../datamodels"
+	//"../models"
+	models "../datamodels"
+	"github.com/go-pg/pg"
 )
 
 type StorageService interface {
@@ -12,7 +12,7 @@ type StorageService interface {
 	GetByID(id int64) models.Storage
 	DeleteByID() []models.Storage
 	UpdateByID() []models.Storage
-	GetList(page int, pageSize int) (r []models.Storage, c int64)
+	GetList(page int, pageSize int) (r []models.Storage, c int)
 }
 
 // NewMovieService returns the default movie service.
@@ -24,17 +24,17 @@ func NewStorageService() *storageService {
 }
 
 type storageService struct {
-	db        *gorm.DB
+	db        *pg.DB
 	tableName string
 }
 
 func (s *storageService) GetAll() (r []models.Storage) {
 
-	s.db.Order("ID").Find(&r)
+	s.db.Model(&r).Order("ID").Select(r)
 	return
 }
 
-func (s *storageService) GetList(page int, pageSize int) (storages []models.Storage, count int64) {
+func (s *storageService) GetList(page int, pageSize int) (storages []models.Storage, count int) {
 
 	offset := (page - 1) * pageSize
 
@@ -52,7 +52,12 @@ func (s *storageService) GetList(page int, pageSize int) (storages []models.Stor
 	//}
 
 	//s.db.Last(&f)
-	s.db.Preload("Project").Order("id").Limit(pageSize).Offset(offset).Find(&storages).Count(&count)
+	count, err:= s.db.Model(&storages).Order("id").Limit(pageSize).Offset(offset).Column("storage.*","Tags", "Crserver", "Crserver.Tags", "Project", "Project.Tags").SelectAndCount(&storages)
+
+	if err != nil  {
+		panic(err)
+	}
+
 	return
 }
 
