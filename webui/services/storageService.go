@@ -5,6 +5,7 @@ import (
 	//"../models"
 	models "../datamodels"
 	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
 type StorageService interface {
@@ -52,9 +53,12 @@ func (s *storageService) GetList(page int, pageSize int) (storages []models.Stor
 	//}
 
 	//s.db.Last(&f)
-	count, err:= s.db.Model(&storages).Order("id").Limit(pageSize).Offset(offset).Column("storage.*","Tags", "Crserver", "Crserver.Tags", "Project", "Project.Tags").SelectAndCount(&storages)
 
-	if err != nil  {
+	count, err := orm.NewQuery(s.db, &storages).Order("id").Limit(pageSize).Offset(offset).Column("storage.*", "Crserver", "Project", "Project.Tags").SelectAndCount(&storages)
+
+	//count, err:= s.db.Model(&storages).Order("id").Limit(pageSize).Offset(offset).Column("storage.*","Tags", "Crserver", "Crserver.Tags", "Project", "Project.Tags").SelectAndCount(&storages)
+	//println(storages[2].Crserver.Tags[0].Text)
+	if err != nil {
 		panic(err)
 	}
 

@@ -1,7 +1,5 @@
 package datasource
 
-import "github.com/go-pg/pg/orm"
-
 var models []interface{}
 var migrations []string
 
@@ -21,16 +19,8 @@ func AutoMigrate() {
 	for _, migration := range migrations {
 		DB.Exec(migration)
 	}
-
-	for _, model := range models{
-		err := DB.CreateTable(model, &orm.CreateTableOptions{
-			Temp: false,
-			IfNotExists: true,
-
-		})
-		if err != nil {
-			panic(err)
-		}
+	for _, model := range models {
+		AutoMigrateModel(model)
 	}
 
 	//DB.AutoMigrate(models...)

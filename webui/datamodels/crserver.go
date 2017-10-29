@@ -8,7 +8,7 @@ type Crserver struct {
 	Port      string
 	Range     string
 	Directory string
-	Tags      []*Tag `pg:",polymorphic:Trackable"`
+	Tags      []string
 }
 
 type Tag struct {

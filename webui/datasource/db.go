@@ -7,6 +7,7 @@ import (
 	"../datamodels"
 	"github.com/astaxie/beego"
 	"github.com/go-pg/pg"
+	_ "github.com/go-pg/pg/orm"
 )
 
 // Configure registers the necessary routes to the app.
@@ -17,7 +18,6 @@ func Configure(b *bootstrap.Bootstrapper) {
 }
 
 var DB *pg.DB
-
 
 func Init() {
 
@@ -37,6 +37,8 @@ func Init() {
 	//DB.DB().SetMaxOpenConns(100)
 
 	AutoMigrate()
+
+	initFakeData()
 }
 
 func TableName(name string) string {
@@ -50,12 +52,11 @@ func getDBConnection() *pg.DB {
 	dbName := beego.AppConfig.String("db.name")
 	dbPass := beego.AppConfig.String("db.password")
 	conn := pg.Connect(&pg.Options{
-		Addr: dbHost,
-		User: dbUser,
-		Password:dbPass,
+		Addr:     dbHost,
+		User:     dbUser,
+		Password: dbPass,
 		Database: dbName,
 	})
-
 
 	//if err != nil {
 	//	panic(err.Error())
@@ -63,3 +64,6 @@ func getDBConnection() *pg.DB {
 
 	return conn
 }
+
+//INSERT INTO newTable
+//SELECT * FROM oldTable

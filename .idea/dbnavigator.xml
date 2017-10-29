@@ -23,12 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
-        <schema name="pg_catalog" object-types="function, table, view" />
-        <schema name="public" object-types="column, constraint, function, index, sequence, table, dataset trigger, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252">
@@ -54,12 +49,24 @@ insert into crservers  (address) VALUES
 
 drop table projects
 
+drop table crservers
+
+
+alter table projects DROP tags 
+
+    
+
+IF EXISTS
+
+
+
 insert into tags (text, trackable_id, trackable_type) VALUES
-    ('dev', 1, 'crserver'),]]></console>
+    ('work', 1, 'project'),]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.storages" active-filter-id="EMPTY_FILTER" />
+    <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.users" active-filter-id="EMPTY_FILTER" />
     <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.projects" active-filter-id="EMPTY_FILTER" />
     <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.tags" active-filter-id="EMPTY_FILTER" />
     <filter-list connection-id="f07b3fcd-dbe1-43fc-9134-ffd7ee5a2252" dataset="public.crservers" active-filter-id="0d7a4a3f-023f-4398-bb2b-837e56282a9a">
@@ -312,9 +319,9 @@ insert into tags (text, trackable_id, trackable_type) VALUES
           <content-type name="GSP" enabled="true" />
           <content-type name="ASP" enabled="true" />
           <content-type name="VTL" enabled="true" />
+          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Flex" enabled="true" />
-          <content-type name="Bash" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
       </qualified-text-editor>

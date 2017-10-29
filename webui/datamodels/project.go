@@ -7,7 +7,7 @@ type Project struct {
 	Description string `json:"description" form:"description"`
 	Picture     []byte
 	ShortKey    string
-	Tags        []*Tag `pg:",polymorphic:Trackable"`
+	Tags        []string
 }
 
 type DefaultStorageUsers struct {

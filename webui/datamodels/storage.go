@@ -23,7 +23,7 @@ type Storage struct {
 	StorageInfoID    int64
 	StorageUsers     []*StorageUser
 	StorageHistory   []*StorageHistory
-	Tags             []*Tag `pg:",polymorphic:Trackable"`
+	Tags             []string
 }
 
 type StorageInfo struct {
