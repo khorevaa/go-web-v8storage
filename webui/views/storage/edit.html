@@ -19,13 +19,12 @@
 
     <!--content-list-->
     <div class="content-list">
-        <form action="{{urlfor " GroupController.Edit
-        "}}" method="post" class="form-horizontal">
+        <form action="{{urlfor " StorageController.Edit"}}" method="post" class="form-horizontal">
         <div class="form-group" style="margin-top: 15px">
-            <label class="col-sm-3 control-label" for="group_name">分类名称</label>
+            <label class="col-sm-3 control-label" for="storage_name">Наименование</label>
             <div class="col-sm-3">
-                <input type="text" class="form-control input-sm" placeholder="" name="group_name"
-                       value="{{.group.GroupName}}" required/>
+                <input type="text" class="form-control input-sm" placeholder="" name="storage_name"
+                       value="{{.storage.BranchName}}" required/>
             </div>
             <div class="col-sm-6" style="padding-top:5px;">
 
@@ -33,20 +32,36 @@
         </div>
 
         <div class="form-group" style="margin-top: 15px">
-            <label class="col-sm-3 control-label" for="description">分类说明</label>
+            <label class="col-sm-3 control-label" for="description">Проект</label>
+            <div class="col-sm-5">
+                <select class="selectpicker" liveSearch=true name="project" class="form-control" id="ProjectID">
+
+                    {{range $k, $project := $.projects}}
+                    <option value="{{$project.ID}}">{{$project.Name}}</option>
+                    {{end}}
+
+                </select>
+            </div>
+            <div class="col-sm-4" style="padding-top:5px;">
+
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 15px">
+            <label class="col-sm-3 control-label" for="description">Описание</label>
             <div class="col-sm-5">
                 <textarea name="description" class="form-control" id="description"
-                          rows="3">{{.group.Description}}</textarea>
+                          rows="3">{{.storage.Description}}</textarea>
             </div>
             <div class="col-sm-4" style="padding-top:5px;">
 
             </div>
         </div>
         <br/>
-        <input type="hidden" name="id" value="{{.group.Id}}"/>
+        <input type="hidden" name="id" value="{{.storage.ID}}"/>
         <div class="modal-footer" style="text-align:center">
-            <button type="submit" class="btn btn-primary submit_attr_button">保存</button>
-            <button type="button" class="btn btn-default reback">返回</button>
+            <button type="submit" class="btn btn-primary submit_attr_button">Сохранить</button>
+            <button type="button" class="btn btn-default reback">Отмена</button>
         </div>
         </form>
     </div>
@@ -56,9 +71,9 @@
     $(function () {
         $("form").submit(function () {
             $("button[type='submit']").attr('disabled', true);
-            $.post('{{urlfor "GroupController.Edit"}}', $(this).serialize(), function (out) {
+            $.post('{{urlfor "StorageController.Edit"}}', $(this).serialize(), function (out) {
                 if (out.status == 0) {
-                    window.location.href = '{{urlfor "GroupController.List"}}';
+                    window.location.href = '{{urlfor "StorageController.List"}}';
                 } else {
                     alert_message(out.msg, "alert-danger", "alert-success");
                     $("button[type='submit']").attr('disabled', false);
@@ -67,4 +82,14 @@
             return false;
         });
     });
+
+</script>
+
+<script>
+
+
+    var ipp = {{.storage.ProjectID}};
+
+    $('#ProjectID').selectpicker('val', ipp);
+    console.log("text");
 </script>

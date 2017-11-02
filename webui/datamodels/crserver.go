@@ -12,7 +12,7 @@ type Crserver struct {
 }
 
 type Tag struct {
-	TrackableID   int64
-	TrackableType string
+	TrackableID   int64	  `sql:",pk"`
+	TrackableType string  `sql:",pk"`
 	Text          string
 }

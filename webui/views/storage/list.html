@@ -50,10 +50,10 @@
                     <thead>
                     <tr>
                         <td class="th-lg"><input type="checkbox" name="all_check"/></td>
-                        <td class="th-lg">ID<i class="fa fa-sort ml-1"></i></td>
                         <td class="th-lg">Проект<i class="fa fa-sort ml-1"></i></td>
                         <td class="th-lg">Описание<i class="fa fa-sort ml-1"></i></td>
                         <td class="th-lg">Имя ветки<i class="fa fa-sort ml-1"></i></td>
+                        <td class="th-lg">Теги<i class="fa fa-sort ml-1"></i></td>
                         <td class="th-lg">Действие<i class="fa fa-sort ml-1"></i></td>
                     </tr>
                     </thead>
@@ -61,15 +61,20 @@
                     {{range $k,$v := .list}}
                     <tr>
                         <td class="chk"><input type="checkbox" name="ids" value="{{$v.ID}}"/></td>
-                        <td class="center">{{$v.ID}}</td>
-                        <td>{{$v.Project}}</td>
+                        <td>{{$v.Project.Name}}</td>
                         <td>{{$v.Description}}</td>
                         <td>{{$v.BranchName}}</td>
+                        <td>
+                            <p>{{range $kk,$tag := $v.Tags}}
+                            <span class="badge badge-success" contenteditable="true">{{$tag}}</span>
+                            {{end}}
+                            </p>
+                        </td>
 
 
                         <td>
 
-                            <a class="btn btn-info  btn-xs" href="{{urlfor " StorageController.Edit"}}?id={{$v.ID}}">
+                            <a class="btn btn-info  btn-xs" href="/storage/edit?id={{$v.ID}}">
                             <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Редактировать
                             </a>
                         </td>

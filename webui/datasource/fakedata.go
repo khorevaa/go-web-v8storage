@@ -2,80 +2,22 @@ package datasource
 
 import (
 	"fmt"
-
 	"time"
-
-	"reflect"
-
-	"strings"
-
 	"../datamodels"
-	"github.com/go-pg/pg"
-	"github.com/go-pg/pg/orm"
 )
 
-var dropTableOpt = &orm.DropTableOptions{
-	true,
-	false,
-}
 
-var createTableOpt = &orm.CreateTableOptions{
-	IfNotExists: true,
-}
 
 func initFakeData() {
 
-	AutoMigrateModel(datamodels.Project{})
+	AutoMigrate()
 
-	//initProjects()
-	//initUsers()
-	//initCrservers()
-
+	initProjects()
+	initUsers()
+	initCrservers()
+	initStorages()
 }
 
-func CopyTable(ExistsTableName string, NewTableName string) {
-
-	println(orm.Tables.Get(reflect.TypeOf(datamodels.Project{})).Name)
-}
-
-func AutoMigrateModel(model interface{}) {
-
-	curTableName := strings.Replace(string(orm.Tables.Get(reflect.TypeOf(datamodels.Project{})).Name), "\"", "", 2)
-	tempTableName := curTableName + "_temp"
-
-	err := DB.RunInTransaction(func(tx *pg.Tx) error {
-
-		_, errDrop := tx.Exec(fmt.Sprintf("DROP TABLE IF EXISTS %s ", tempTableName))
-		if errDrop != nil {
-			panic(errDrop)
-		}
-
-		_, err := tx.Exec(fmt.Sprintf("CREATE TABLE %s AS (SELECT * FROM %s) ", tempTableName, curTableName))
-
-		if err != nil {
-			panic(err)
-		}
-
-		tx.DropTable(model, dropTableOpt)
-		tx.CreateTable(model, createTableOpt)
-
-		_, err = tx.Exec(fmt.Sprintf("INSERT INTO  %s (SELECT * FROM %s) ", tempTableName, curTableName))
-
-		if err != nil {
-			panic(err)
-		}
-		_, err = tx.Exec(fmt.Sprintf("DROP TABLE %s", tempTableName))
-
-		if err != nil {
-			panic(err)
-		}
-		return err
-	})
-
-	if err != nil {
-		panic(err)
-	}
-}
 
 func initProjects() {
 
@@ -113,8 +55,6 @@ func initProjects() {
 	}
 
 	fmt.Sprintln(array)
-
-	//r, err := orm.NewQuery(DB, &array).OnConflict("DO NOTHING").Returning("*").Insert()
 
 	_, err := DB.Model(&array).OnConflict("DO NOTHING").Returning("*").Insert()
 	if err != nil {
@@ -207,4 +147,135 @@ func initCrservers() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func initStorages() {
+
+	p1 := datamodels.Storage{
+		BaseModel:        datamodels.BaseModel{ID: 1},
+		ProjectID:        1,
+		CrserverID:       1,
+		BranchName:       "master",
+		Description:      "Рабочение хранилище JIRA",
+		UserID:           1,
+		HistoryUpdatedAt: time.Now(),
+		ConnectLogin:     "Администратор",
+		ConnectPassword:  "Пароль",
+		Type:             "http",
+		StorageInfoID:    1,
+		Tags:             []string{"prod", "work"},
+	}
+
+	p2 := datamodels.Storage{
+		BaseModel:   datamodels.BaseModel{ID: 2},
+		ProjectID:        2,
+		CrserverID:       1,
+		BranchName:       "master",
+		Description:      "Рабочение хранилище Bitbucket",
+		UserID:           1,
+		HistoryUpdatedAt: time.Now(),
+		ConnectLogin:     "Администратор",
+		ConnectPassword:  "Пароль",
+		Type:             "http",
+		StorageInfoID:    2,
+		Tags:        	 []string{"prod", "work"},
+	}
+
+	p3 := datamodels.Storage{
+		BaseModel:   datamodels.BaseModel{ID: 3},
+		ProjectID:        3,
+		CrserverID:       1,
+		BranchName:       "master",
+		Description:      "Рабочение хранилище Bamboo",
+		UserID:           1,
+		HistoryUpdatedAt: time.Now(),
+		ConnectLogin:     "Администратор",
+		ConnectPassword:  "Пароль",
+		Type:             "http",
+		StorageInfoID:    3,
+		Tags:        	 []string{"prod", "work"},
+	}
+
+
+	p4 := datamodels.Storage{
+		BaseModel:        datamodels.BaseModel{ID: 4},
+		ProjectID:        1,
+		CrserverID:       1,
+		BranchName:       "feature/new-ss",
+		Description:      "Задача по разработки New-SS (JIRA)",
+		UserID:           2,
+		HistoryUpdatedAt: time.Now(),
+		ConnectLogin:     "Администратор",
+		ConnectPassword:  "Пароль",
+		Type:             "http",
+		StorageInfoID:    1,
+		Tags:             []string{"dev", "new"},
+	}
+
+	array := []datamodels.Storage{
+		p1,
+		p2,
+		p3,
+		p4,
+	}
+
+	fmt.Sprintln(array)
+
+	_, err := DB.Model(&array).OnConflict("DO NOTHING").Returning("*").Insert()
+	if err != nil {
+		panic(err)
+	}
+
+}
+
+func initDefaultStorageUsers() {
+
+	p1 := datamodels.Project{
+	}
+
+	p2 := datamodels.Project{
+	}
+
+	p3 := datamodels.Project{
+	}
+
+	array := []datamodels.Project{
+		p1,
+		p2,
+		p3,
+	}
+
+	fmt.Sprintln(array)
+
+	_, err := DB.Model(&array).OnConflict("DO NOTHING").Returning("*").Insert()
+	if err != nil {
+		panic(err)
+	}
+
+}
+
+func initStorageHistory() {
+
+	p1 := datamodels.Project{
+	}
+
+	p2 := datamodels.Project{
+	}
+
+	p3 := datamodels.Project{
+	}
+
+	array := []datamodels.Project{
+		p1,
+		p2,
+		p3,
+	}
+
+	fmt.Sprintln(array)
+
+	_, err := DB.Model(&array).OnConflict("DO NOTHING").Returning("*").Insert()
+	if err != nil {
+		panic(err)
+	}
+
 }

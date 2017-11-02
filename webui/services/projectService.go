@@ -8,34 +8,38 @@ import (
 	"github.com/go-pg/pg/orm"
 )
 
-type StorageService interface {
-	GetAll() []models.Storage
-	GetByID(id int64) models.Storage
-	DeleteByID() []models.Storage
-	UpdateByID() []models.Storage
-	GetList(page int, pageSize int) (r []models.Storage, c int)
+type ProjectService interface {
+	GetAll() []models.Project
+	GetByID(id int64) models.Project
+	DeleteByID() []models.Project
+	UpdateByID() []models.Project
+	GetList(page int, pageSize int) (r []models.Project, c int)
 }
 
 // NewMovieService returns the default movie service.
-func NewStorageService() *storageService {
-	return &storageService{
+func NewProjectService() *projectService{
+	return &projectService{
 		db:        datasource.DB,
 		tableName: datasource.TableName("Storage"),
 	}
 }
 
-type storageService struct {
+type projectService struct {
 	db        *pg.DB
 	tableName string
 }
 
-func (s *storageService) GetAll() (r []models.Storage) {
+func (s *projectService) GetAll() (projects []models.Project) {
 
-	s.db.Model(&r).Order("ID").Select(r)
+	_, err := s.db.Model(&projects).Order("id").SelectAndCount(&projects)
+
+	if err != nil {
+		panic(err)
+	}
 	return
 }
 
-func (s *storageService) GetList(page int, pageSize int) (storages []models.Storage, count int) {
+func (s *projectService) GetList(page int, pageSize int) (storages []models.Project, count int) {
 
 	offset := (page - 1) * pageSize
 
@@ -65,7 +69,7 @@ func (s *storageService) GetList(page int, pageSize int) (storages []models.Stor
 	return
 }
 
-func (s *storageService) GetByID(id int64) (storage models.Storage) {
+func (s *projectService) GetByID(id int64) (storage models.Project) {
 
 	err:= s.db.Model(&storage).Order("id").Column("storage.*").Where("id =?", id).Select(&storage)
 
@@ -75,21 +79,21 @@ func (s *storageService) GetByID(id int64) (storage models.Storage) {
 	return
 }
 
-func (s *storageService) Update(storage models.Storage) (err error) {
+func (s *projectService) Update(storage models.Project) (err error) {
 
 	_, err= s.db.Model(&storage).Update(&storage)
 
 	return
 }
 
-func (s *storageService) DeleteByID() (r []models.Storage) {
+func (s *projectService) DeleteByID() (r []models.Project) {
 
 	//s.orm.QueryTable(s.tableName).OrderBy("-id").All(r)
 
 	return
 }
 
-func (s *storageService) UpdateByID() (r []models.Storage) {
+func (s *projectService) UpdateByID() (r []models.Project) {
 
 	//s.orm.QueryTable(s.tableName).OrderBy("-id").All(r)
 

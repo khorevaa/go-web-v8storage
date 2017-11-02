@@ -13,6 +13,8 @@ import (
 // Configure registers the necessary routes to the app.
 func Configure(b *bootstrap.Bootstrapper) {
 
+	//beego.InsertFilter("", beego.BeforeRouter, func, "")
+	//beego.FilterRouter{}
 	beego.Router("/", &MainController{}, "*:Index")
 	beego.Router("/login", &MainController{}, "*:Login")
 	beego.Router("/logout", &MainController{}, "*:Logout")
