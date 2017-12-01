@@ -1,14 +1,15 @@
-package v8runner
+package v8platform
 
 import (
-	"./v8config-file"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"os"
 	"os/exec"
 	"path"
 	"runtime"
 	"strings"
+
+	"../v8config-file"
+	log "github.com/sirupsen/logrus"
 )
 
 const ВерсияПоУмолчанию string = "8.3"
@@ -34,6 +35,11 @@ func init() {
 }
 func добавитьВерсию(v *ВерсияПлатформы) {
 	ДоступныеВерсииПлатформы[v.Версия] = v
+}
+
+func ПолучитьВерсию(строкаВерсияПлатформы string) (v *ВерсияПлатформы) {
+	v = ДоступныеВерсииПлатформы[строкаВерсияПлатформы]
+	return
 }
 
 func ПолучитьВерсиюПоУмолчанию() (v *ВерсияПлатформы) {

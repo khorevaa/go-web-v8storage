@@ -4,7 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/v8runner/dumpMode/dumpMode.iml" filepath="$PROJECT_DIR$/v8runner/dumpMode/dumpMode.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/go-web-v8storage.iml" filepath="$PROJECT_DIR$/.idea/go-web-v8storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8config-file/v8config-file.iml" filepath="$PROJECT_DIR$/v8runner/v8config-file/v8config-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8platform/v8platform.iml" filepath="$PROJECT_DIR$/v8runner/v8platform/v8platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8run/v8run.iml" filepath="$PROJECT_DIR$/v8runner/v8run/v8run.iml" />
       <module fileurl="file://$PROJECT_DIR$/v8runner/v8runner.iml" filepath="$PROJECT_DIR$/v8runner/v8runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8storage/v8storage.iml" filepath="$PROJECT_DIR$/v8runner/v8storage/v8storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8tempDb/v8tempDb.iml" filepath="$PROJECT_DIR$/v8runner/v8tempDb/v8tempDb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/v8runner/v8tools/v8tools.iml" filepath="$PROJECT_DIR$/v8runner/v8tools/v8tools.iml" />
       <module fileurl="file://$PROJECT_DIR$/webui/webui.iml" filepath="$PROJECT_DIR$/webui/webui.iml" />
     </modules>
   </component>

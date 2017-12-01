@@ -1,19 +1,30 @@
-package v8runner
+package v8tools
 
 import (
 	"bytes"
+	"io/ioutil"
+	"math/rand"
+	"os"
+
 	"github.com/mash/go-tempfile-suffix"
 	extraStrings "github.com/shomali11/util/strings"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
-	"io/ioutil"
-	"math/rand"
-	"os"
 
 	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
+)
+
+var (
+	tempFiles []string
+	tempDir   string = ИницализороватьВременныйКаталог()
+)
+
+const (
+	prefix     = "v8r"
+	TempDBname = "TempBD_v8"
 )
 
 func ВременныйКаталог() string {

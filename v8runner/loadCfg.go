@@ -2,8 +2,9 @@ package v8runner
 
 import (
 	"fmt"
-	//log "github.com/sirupsen/logrus"
+
 	"./dumpMode"
+	"./v8tools"
 	"github.com/pkg/errors"
 )
 
@@ -34,7 +35,7 @@ func (conf *Конфигуратор) loadConfigFromFiles(dir string, pListFile 
 
 	c = append(c, fmt.Sprintf("/LoadConfigFromFiles %s", dir))
 
-	if ok, _ := Exists(pListFile); ok {
+	if ok, _ := v8tools.Exists(pListFile); ok {
 
 		if ok, _ := РежимВыгрузкиКонфигурации.РежимДоступен(format); ok {
 			c = append(c, fmt.Sprintf("-format %s", format))

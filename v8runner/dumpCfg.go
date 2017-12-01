@@ -1,8 +1,10 @@
 package v8runner
 
 import (
-	"./dumpMode"
 	"fmt"
+
+	"./dumpMode"
+	"./v8tools"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -55,10 +57,10 @@ func (conf *Конфигуратор) dumpConfigToFiles(dir string, mode string,
 	if ch {
 		//Если ПроверитьВозможностьОбновленияФайловВыгрузки(КаталогВыгрузки, ПутьКФайлуВерсийДляСравнения, ФорматВыгрузки) Тогда
 		c = append(c, "-update", "-force")
-		if ЗначениеЗаполнено(pChFile) {
+		if v8tools.ЗначениеЗаполнено(pChFile) {
 			c = append(c, fmt.Sprintf("-getChanges %s", pChFile))
 		}
-		if ЗначениеЗаполнено(pChFile) {
+		if v8tools.ЗначениеЗаполнено(pChFile) {
 			c = append(c, fmt.Sprintf("-configDumpInfoForChanges %s", pVersionFile))
 		}
 	}

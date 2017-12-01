@@ -2,10 +2,11 @@ package v8runner
 
 import (
 	//"testing"
-	//"github.com/stretchr/testify/suite"
+	//_ "github.com/stretchr/testify/suite"
+	"path"
+
 	"./dumpMode"
 	log "github.com/sirupsen/logrus"
-	"path"
 )
 
 var _ = Suite(&тестыНаВыгрузкуКонфигурации{})

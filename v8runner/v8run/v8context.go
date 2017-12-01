@@ -1,11 +1,16 @@
-package v8runner
+package v8run
+
+import (
+	"../v8tempDb"
+	"../v8tools"
+)
 
 type Контекст struct {
 	КлючСоединенияСБазой  string
 	Пользователь          string
 	Пароль                string
 	КлючРазрешенияЗапуска string
-	ВременнаяБаза         *ВременнаяБаза
+	ВременнаяБаза         *v8tempDb.ВременнаяБаза
 	КодЯзыка              string
 	КодЯзыкаСеанса        string
 }
@@ -22,7 +27,7 @@ func newContext() *Контекст {
 		"",
 		"",
 		"",
-		НоваяВременнаяБаза(ВременныйКаталогСПрефисом(tempDBname)),
+		v8tempDb.НоваяВременнаяБаза(v8tools.ВременныйКаталогСПрефисом(v8tools.TempDBname)),
 		"",
 		"",
 	}
