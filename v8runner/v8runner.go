@@ -14,8 +14,9 @@ type Error interface {
 }
 
 const (
-	prefix     = "v8r"
-	tempDBname = "TempBD_v8"
+	prefix           = "v8r"
+	tempDBname       = "TempBD_v8"
+	СonfiguratuonXml = "Configuration.xml"
 )
 
 var (

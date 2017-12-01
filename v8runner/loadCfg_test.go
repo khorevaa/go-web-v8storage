@@ -1,15 +1,17 @@
 package v8runner
 
 import (
-	"./dumpMode"
 	"path"
+
+	"./dumpMode"
 	//"testing"
+	_ "github.com/stretchr/testify/suite"
 )
 
 var _ = Suite(&тестыНаЗагрузкуКонфигурацииИзФайла{})
 var _ = Suite(&тестыНаЗагрузкуКонфигурацииИзФайлов{})
 
-const configuratuonXml = "Configuration.xml"
+
 
 type тестыНаЗагрузкуКонфигурацииИзФайла struct {
 	conf                            *Конфигуратор
